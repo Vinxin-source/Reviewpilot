@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ReviewPilot — Get More Google Reviews, Automatically</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f0f0f;
+      color: #f0f0f0;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2rem;
+      border-bottom: 1px solid #222;
+    }
+    .logo { font-size: 1.4rem; font-weight: 700; color: #fff; }
+    .logo span { color: #4ade80; }
+    nav a {
+      color: #aaa;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-size: 0.9rem;
+    }
+    nav a.btn {
+      background: #4ade80;
+      color: #000;
+      padding: 0.5rem 1.2rem;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+    .hero {
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      max-width: 750px;
+      margin: 0 auto;
+    }
+    .badge {
+      display: inline-block;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      color: #4ade80;
+      font-size: 0.75rem;
+      padding: 0.3rem 1rem;
+      border-radius: 999px;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.05em;
+    }
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+      font-weight: 800;
+    }
+    h1 span { color: #4ade80; }
+    .sub {
+      font-size: 1.1rem;
+      color: #999;
+      max-width: 55ch;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: #4ade80;
+      color: #000;
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+    .btn-ghost {
+      border: 1px solid #333;
+      color: #ccc;
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+    .social-proof {
+      text-align: center;
+      padding: 2rem;
+      color: #555;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .how {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+    .section-label {
+      text-align: center;
+      color: #4ade80;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    h2 {
+      text-align: center;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      margin-bottom: 3rem;
+    }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+    .step {
+      background: #161616;
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 1.75rem;
+    }
+    .step-num {
+      font-size: 0.7rem;
+      color: #4ade80;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
+    }
+    .step h3 { font-size: 1rem; margin-bottom: 0.5rem; }
+    .step p { font-size: 0.88rem; color: #777; line-height: 1.6; }
+    .pricing {
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    .price-card {
+      background: #161616;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-top: 2rem;
+    }
+    .price-card .amount {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #4ade80;
+    }
+    .price-card .amount span { font-size: 1rem; color: #666; }
+    .price-card ul {
+      list-style: none;
+      text-align: left;
+      margin: 1.5rem 0 2rem;
+    }
+    .price-card ul li {
+      padding: 0.5rem 0;
+      color: #aaa;
+      font-size: 0.92rem;
+      border-bottom: 1px solid #1f1f1f;
+    }
+    .price-card ul li::before { content: '✓ '; color: #4ade80; }
+    .price-card .cta {
+      display: block;
+      background: #4ade80;
+      color: #000;
+      padding: 0.9rem;
+      border-radius: 8px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: #444;
+      font-size: 0.8rem;
+      border-top: 1px solid #1a1a1a;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Review<span>Pilot</span></div>
+  <div>
+    <a href="/login.html">Log in</a>
+    <a href="/signup.html" class="btn">Start Free Trial</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="badge">🇺🇸 Built for US Local Businesses</div>
+  <h1>Get More Google Reviews<br><span>Without Lifting a Finger</span></h1>
+  <p class="sub">ReviewPilot automatically asks your customers for a Google review right after their visit — via text or email. Set it up once. Reviews come in on autopilot.</p>
+  <div class="hero-btns">
+    <a href="/signup.html" class="btn-primary">Start Free — 14 Days Free</a>
+    <a href="#how" class="btn-ghost">See How It Works</a>
+  </div>
+</section>
+
+<div class="social-proof">Works for barbers · nail salons · cleaners · trainers · handymen · and more</div>
+
+<section class="how" id="how">
+  <p class="section-label">How It Works</p>
+  <h2>Three ways to use it.<br>Zero tech skills needed.</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">OPTION 01</div>
+      <h3>📱 QR Code</h3>
+      <p>Print your unique QR code. Customer scans it after their visit. ReviewPilot texts them a review link automatically.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">OPTION 02</div>
+      <h3>✍️ Manual Entry</h3>
+      <p>Type in a customer's name and phone number after their visit. ReviewPilot sends the request automatically — 2 hours later.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">OPTION 03</div>
+      <h3>🔗 Connect Square</h3>
+      <p>Already use Square? Connect it once. ReviewPilot detects every completed appointment and sends requests with zero input from you.</p>
+    </div>
+  </div>
+</section>
+
+<section class="pricing">
+  <p class="section-label">Pricing</p>
+  <h2>Simple. Flat. Fair.</h2>
+  <div class="price-card">
+    <div class="amount">$19<span>/month</span></div>
+    <ul>
+      <li>Unlimited review requests</li>
+      <li>QR code for your counter</li>
+      <li>Manual customer entry</li>
+      <li>Square integration</li>
+      <li>Weekly results email</li>
+      <li>Your Google review link auto-generated</li>
+      <li>Cancel anytime</li>
+    </ul>
+    <a href="/signup.html" class="cta">Start Free Trial — No Card Needed</a>
+  </div>
+</section>
+
+<footer>
+  © 2026 ReviewPilot · Built for local businesses across America
+</footer>
+
+</body>
+</html>
