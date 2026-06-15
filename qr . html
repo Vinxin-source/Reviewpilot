@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ReviewPilot — My QR Code</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f0f0f;
+      color: #f0f0f0;
+      min-height: 100vh;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #1e1e1e;
+      background: #111;
+    }
+    .logo { font-size: 1.3rem; font-weight: 700; color: #fff; text-decoration: none; }
+    .logo span { color: #4ade80; }
+    nav a.back {
+      font-size: 0.85rem;
+      color: #666;
+      text-decoration: none;
+    }
+    nav a.back:hover { color: #4ade80; }
+
+    .main {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+      text-align: center;
+    }
+
+    .page-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #4ade80;
+      margin-bottom: 0.75rem;
+    }
+    h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .sub { color: #666; font-size: 0.92rem; margin-bottom: 2.5rem; line-height: 1.6; }
+
+    /* QR CARD — what gets printed */
+    .qr-card {
+      background: #fff;
+      color: #000;
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      margin: 0 auto 2rem;
+      max-width: 320px;
+      box-shadow: 0 0 60px rgba(74,222,128,0.08);
+    }
+    .qr-card .business-name {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 0.4rem;
+    }
+    .qr-card .scan-text {
+      font-size: 0.82rem;
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+    #qrcode {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    #qrcode canvas, #qrcode img {
+      border-radius: 8px;
+    }
+    .qr-card .star-row {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+    .qr-card .cta-text {
+      font-size: 0.78rem;
+      color: #444;
+      line-height: 1.5;
+    }
+    .qr-card .brand {
+      margin-top: 1.25rem;
+      font-size: 0.65rem;
+      color: #bbb;
+      letter-spacing: 0.08em;
+    }
+
+    /* BUTTONS */
+    .actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+    .btn-print {
+      background: #4ade80;
+      color: #000;
+      border: none;
+      padding: 0.8rem 1.75rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+    .btn-download {
+      background: #161616;
+      color: #ccc;
+      border: 1px solid #2a2a2a;
+      padding: 0.8rem 1.75rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+    .btn-download:hover { border-color: #4ade80; color: #fff; }
+
+    /* TIPS */
+    .tips {
+      background: #161616;
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: left;
+    }
+    .tips h3 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #4ade80;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .tip {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+      font-size: 0.85rem;
+      color: #888;
+      line-height: 1.5;
+    }
+    .tip:last-child { margin-bottom: 0; }
+    .tip .num {
+      min-width: 1.4rem;
+      height: 1.4rem;
+      background: #1e1e1e;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: #4ade80;
+      font-weight: 700;
+      margin-top: 0.1rem;
+    }
+
+    .loading-msg { color: #444; font-size: 0.9rem; padding: 3rem 0; }
+
+    @media print {
+      nav, .actions, .tips, .sub, .page-label, h1 { display: none !important; }
+      body { background: #fff; }
+      .main { padding: 0; }
+      .qr-card {
+        box-shadow: none;
+        border-radius: 0;
+        max-width: 100%;
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/dashboard.html" class="logo">Review<span>Pilot</span></a>
+  <a href="/dashboard.html" class="back">← Back to Dashboard</a>
+</nav>
+
+<div class="main">
+  <p class="page-label">Your QR Code</p>
+  <h1>Print & Place on Your Counter</h1>
+  <p class="sub">Customers scan this after their visit. ReviewPilot automatically sends them a review request. No typing needed from you — ever.</p>
+
+  <div id="loadingMsg" class="loading-msg">Generating your QR code...</div>
+
+  <div id="qrSection" style="display:none;">
+    <!-- QR CARD -->
+    <div class="qr-card" id="qrCard">
+      <div class="business-name" id="cardBusiness">Your Business</div>
+      <div class="scan-text">Scan to leave us a quick review 😊</div>
+      <div id="qrcode"></div>
+      <div class="star-row">⭐⭐⭐⭐⭐</div>
+      <div class="cta-text">Takes less than 1 minute.<br>We really appreciate it!</div>
+      <div class="brand">Powered by ReviewPilot</div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="actions">
+      <button class="btn-print" onclick="window.print()">🖨️ Print This Page</button>
+      <button class="btn-download" onclick="downloadQR()">⬇️ Download QR Image</button>
+    </div>
+
+    <!-- TIPS -->
+    <div class="tips">
+      <h3>💡 How to Get the Most Reviews</h3>
+      <div class="tip">
+        <div class="num">1</div>
+        <div>Place the printed QR code at your checkout counter, front desk, or anywhere customers pay or wait.</div>
+      </div>
+      <div class="tip">
+        <div class="num">2</div>
+        <div>Tell customers verbally: <em>"Feel free to scan that code and leave us a review — it really helps!"</em></div>
+      </div>
+      <div class="tip">
+        <div class="num">3</div>
+        <div>Put one in your waiting area too. The more they see it, the more likely they scan it.</div>
+      </div>
+      <div class="tip">
+        <div class="num">4</div>
+        <div>ReviewPilot sends a follow-up reminder automatically 2 hours after they scan — so even if they forget, you're covered.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  async function getSupabase() {
+    const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm');
+    return createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+  }
+
+  async function init() {
+    const supabase = await getSupabase();
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (!session) {
+      window.location.href = '/login.html';
+      return;
+    }
+
+    const user = session.user;
+    const meta = user.user_metadata;
+    const businessName = meta.business_name || 'My Business';
+    const googleLink = meta.google_review_link || 'https://reviewpilot.app';
+
+    // Build QR scan URL — points to a scan landing that logs the scan + sends email
+    const scanURL = `${window.location.origin}/scan.html?uid=${user.id}`;
+
+    document.getElementById('cardBusiness').textContent = businessName;
+    document.getElementById('loadingMsg').style.display = 'none';
+    document.getElementById('qrSection').style.display = 'block';
+
+    // Generate QR code
+    new QRCode(document.getElementById('qrcode'), {
+      text: scanURL,
+      width: 180,
+      height: 180,
+      colorDark: '#000000',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  }
+
+  function downloadQR() {
+    const canvas = document.querySelector('#qrcode canvas');
+    if (!canvas) {
+      alert('QR code not ready yet. Wait a moment and try again.');
+      return;
+    }
+    const link = document.createElement('a');
+    link.download = 'reviewpilot-qr-code.png';
+    link.href = canvas.toDataURL();
+    link.click();
+  }
+
+  init();
+</script>
+
+</body>
+</html>
