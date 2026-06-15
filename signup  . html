@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ReviewPilot — Create Your Account</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f0f0f;
+      color: #f0f0f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2rem;
+      border-bottom: 1px solid #222;
+    }
+    .logo { font-size: 1.4rem; font-weight: 700; color: #fff; text-decoration: none; }
+    .logo span { color: #4ade80; }
+    nav a.login {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .page {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.5rem;
+    }
+    .card {
+      background: #161616;
+      border: 1px solid #222;
+      border-radius: 16px;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 420px;
+    }
+    .card h1 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 0.4rem;
+    }
+    .card h1 span { color: #4ade80; }
+    .trial-badge {
+      display: inline-block;
+      background: rgba(74,222,128,0.1);
+      border: 1px solid rgba(74,222,128,0.3);
+      color: #4ade80;
+      font-size: 0.78rem;
+      padding: 0.3rem 0.9rem;
+      border-radius: 999px;
+      margin-bottom: 1.75rem;
+      margin-top: 0.5rem;
+    }
+    .field { margin-bottom: 1.1rem; }
+    label {
+      display: block;
+      font-size: 0.82rem;
+      color: #888;
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.03em;
+    }
+    input, select {
+      width: 100%;
+      background: #0f0f0f;
+      border: 1px solid #2a2a2a;
+      color: #f0f0f0;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border 0.2s;
+    }
+    input:focus, select:focus { border-color: #4ade80; }
+    select option { background: #161616; }
+    .ref-box {
+      background: rgba(74,222,128,0.05);
+      border: 1px solid rgba(74,222,128,0.2);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-size: 0.82rem;
+      color: #4ade80;
+      margin-bottom: 1.1rem;
+      display: none;
+    }
+    .ref-box.show { display: block; }
+    .btn {
+      width: 100%;
+      background: #4ade80;
+      color: #000;
+      border: none;
+      padding: 0.9rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.9; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .divider {
+      text-align: center;
+      color: #444;
+      font-size: 0.8rem;
+      margin: 1.25rem 0;
+      position: relative;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 42%;
+      height: 1px;
+      background: #222;
+    }
+    .divider::before { left: 0; }
+    .divider::after { right: 0; }
+    .login-link {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 1.25rem;
+    }
+    .login-link a { color: #4ade80; text-decoration: none; }
+    .error-msg {
+      background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.3);
+      color: #f87171;
+      font-size: 0.82rem;
+      padding: 0.65rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .error-msg.show { display: block; }
+    .success-msg {
+      background: rgba(74,222,128,0.1);
+      border: 1px solid rgba(74,222,128,0.3);
+      color: #4ade80;
+      font-size: 0.82rem;
+      padding: 0.65rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .success-msg.show { display: block; }
+    .terms {
+      font-size: 0.75rem;
+      color: #555;
+      text-align: center;
+      margin-top: 1rem;
+      line-height: 1.5;
+    }
+    .terms a { color: #4ade80; text-decoration: none; }
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #000;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/index.html" class="logo">Review<span>Pilot</span></a>
+  <a href="/login.html" class="login">Already have an account? Log in</a>
+</nav>
+
+<div class="page">
+  <div class="card">
+    <h1>Start Your <span>Free Trial</span></h1>
+    <div class="trial-badge">🎉 7 days free — no credit card needed</div>
+
+    <div class="error-msg" id="errorMsg"></div>
+    <div class="success-msg" id="successMsg"></div>
+
+    <!-- Referral notice (shown if ?ref= is in URL) -->
+    <div class="ref-box" id="refBox">
+      🎁 You were referred! Sign up and your friend gets <strong>15 extra free days</strong> when you subscribe.
+    </div>
+
+    <div class="field">
+      <label>Your Full Name</label>
+      <input type="text" id="fullName" placeholder="Maria Johnson" />
+    </div>
+
+    <div class="field">
+      <label>Business Name</label>
+      <input type="text" id="businessName" placeholder="Maria's Nail Studio" />
+    </div>
+
+    <div class="field">
+      <label>Business Type</label>
+      <select id="businessType">
+        <option value="">Select your business type</option>
+        <option>Barber / Hair Salon</option>
+        <option>Nail Salon</option>
+        <option>Cleaning Service</option>
+        <option>Personal Trainer</option>
+        <option>Plumber / Handyman</option>
+        <option>Landscaping</option>
+        <option>Auto Repair</option>
+        <option>Dog Grooming</option>
+        <option>Massage / Spa</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Email Address</label>
+      <input type="email" id="email" placeholder="maria@example.com" />
+    </div>
+
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="password" placeholder="Min. 8 characters" />
+    </div>
+
+    <div class="field">
+      <label>Your Google Maps Business Link <span style="color:#555">(paste it here)</span></label>
+      <input type="url" id="googleLink" placeholder="https://g.page/r/your-business/review" />
+    </div>
+
+    <button class="btn" id="signupBtn" onclick="handleSignup()">
+      Create My Free Account
+    </button>
+
+    <p class="terms">
+      By signing up you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.
+      $19/month after your 7-day trial. Cancel anytime.
+    </p>
+
+    <div class="login-link">
+      Already have an account? <a href="/login.html">Log in here</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Check for referral code in URL
+  const params = new URLSearchParams(window.location.search);
+  const refCode = params.get('ref');
+  if (refCode) {
+    document.getElementById('refBox').classList.add('show');
+    localStorage.setItem('referralCode', refCode);
+  }
+
+  async function handleSignup() {
+    const btn = document.getElementById('signupBtn');
+    const errorMsg = document.getElementById('errorMsg');
+    const successMsg = document.getElementById('successMsg');
+
+    const fullName = document.getElementById('fullName').value.trim();
+    const businessName = document.getElementById('businessName').value.trim();
+    const businessType = document.getElementById('businessType').value;
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const googleLink = document.getElementById('googleLink').value.trim();
+
+    // Hide old messages
+    errorMsg.classList.remove('show');
+    successMsg.classList.remove('show');
+
+    // Validate
+    if (!fullName || !businessName || !businessType || !email || !password || !googleLink) {
+      errorMsg.textContent = 'Please fill in all fields.';
+      errorMsg.classList.add('show');
+      return;
+    }
+    if (password.length < 8) {
+      errorMsg.textContent = 'Password must be at least 8 characters.';
+      errorMsg.classList.add('show');
+      return;
+    }
+    if (!googleLink.includes('google') && !googleLink.includes('g.page')) {
+      errorMsg.textContent = 'Please enter a valid Google Maps link.';
+      errorMsg.classList.add('show');
+      return;
+    }
+
+    // Loading state
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Creating account...';
+
+    try {
+      const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm');
+      const supabase = createClient(
+        window.SUPABASE_URL,
+        window.SUPABASE_ANON_KEY
+      );
+
+      // Create auth user
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: fullName,
+            business_name: businessName,
+            business_type: businessType,
+            google_review_link: googleLink,
+            referral_code: localStorage.getItem('referralCode') || null,
+            trial_ends: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
+          }
+        }
+      });
+
+      if (error) throw error;
+
+      successMsg.textContent = '✅ Account created! Check your email to confirm, then log in.';
+      successMsg.classList.add('show');
+      btn.textContent = 'Account Created!';
+
+      setTimeout(() => {
+        window.location.href = '/login.html';
+      }, 2500);
+
+    } catch (err) {
+      errorMsg.textContent = err.message || 'Something went wrong. Please try again.';
+      errorMsg.classList.add('show');
+      btn.disabled = false;
+      btn.textContent = 'Create My Free Account';
+    }
+  }
+</script>
+
+</body>
+</html>
