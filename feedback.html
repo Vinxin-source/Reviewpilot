@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>How was your experience?</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f0f0f;
+      color: #f0f0f0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .card {
+      background: #161616;
+      border: 1px solid #222;
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+    }
+    .biz-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #4ade80;
+      margin-bottom: 0.5rem;
+    }
+    h1 { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .sub { color: #777; font-size: 0.9rem; margin-bottom: 2rem; }
+
+    /* STAR RATING */
+    .stars {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      font-size: 2.5rem;
+    }
+    .star {
+      cursor: pointer;
+      color: #2a2a2a;
+      transition: color 0.15s, transform 0.1s;
+      user-select: none;
+    }
+    .star:hover, .star.active { color: #facc15; transform: scale(1.1); }
+
+    /* THANK YOU SCREEN (positive) */
+    .positive-screen, .negative-screen, .feedback-form, .done-screen {
+      display: none;
+    }
+    .positive-screen.show, .negative-screen.show,
+    .feedback-form.show, .done-screen.show { display: block; }
+
+    .big-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+    .redirect-note { color: #666; font-size: 0.85rem; margin-top: 1rem; }
+
+    /* FEEDBACK FORM */
+    textarea {
+      width: 100%;
+      background: #0f0f0f;
+      border: 1px solid #2a2a2a;
+      color: #f0f0f0;
+      padding: 0.9rem 1rem;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      font-family: inherit;
+      outline: none;
+      resize: vertical;
+      min-height: 110px;
+      margin-bottom: 1.25rem;
+    }
+    textarea:focus { border-color: #4ade80; }
+
+    .btn {
+      width: 100%;
+      background: #4ade80;
+      color: #000;
+      border: none;
+      padding: 0.85rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+    .btn:hover { opacity: 0.9; }
+    .btn-skip {
+      width: 100%;
+      background: none;
+      color: #555;
+      border: none;
+      padding: 0.6rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+    .btn-skip:hover { color: #888; }
+
+    .loading { color: #444; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div id="loading" class="loading">Loading...</div>
+
+  <!-- STEP 1: RATING -->
+  <div id="ratingScreen" style="display:none;">
+    <div class="biz-name" id="bizName">Business Name</div>
+    <h1>How was your experience?</h1>
+    <p class="sub">Tap a star to rate us</p>
+    <div class="stars" id="starRow">
+      <span class="star" data-value="1">★</span>
+      <span class="star" data-value="2">★</span>
+      <span class="star" data-value="3">★</span>
+      <span class="star" data-value="4">★</span>
+      <span class="star" data-value="5">★</span>
+    </div>
+  </div>
+
+  <!-- STEP 2A: POSITIVE -> redirect to Google -->
+  <div id="positiveScreen" class="positive-screen">
+    <div class="big-icon">🎉</div>
+    <h1>Thank you!</h1>
+    <p class="sub">Taking you to leave a Google review...</p>
+    <p class="redirect-note">If nothing happens, <a href="#" id="manualRedirect" style="color:#4ade80;">tap here</a></p>
+  </div>
+
+  <!-- STEP 2B: NEGATIVE -> private feedback -->
+  <div id="negativeScreen" class="negative-screen">
+    <div class="big-icon">🙏</div>
+    <h1>We'll make this right</h1>
+    <p class="sub">Thanks for letting us know. Want to tell us more? It goes straight to the owner, privately.</p>
+  </div>
+
+  <!-- STEP 3: FEEDBACK TEXT BOX -->
+  <div id="feedbackForm" class="feedback-form">
+    <textarea id="feedbackText" placeholder="What went wrong? (optional)"></textarea>
+    <button class="btn" id="submitFeedbackBtn" onclick="submitFeedback()">Send Privately</button>
+    <button class="btn-skip" onclick="skipFeedback()">Skip</button>
+  </div>
+
+  <!-- STEP 4: DONE -->
+  <div id="doneScreen" class="done-screen">
+    <div class="big-icon">✅</div>
+    <h1>Got it</h1>
+    <p class="sub">Thanks for your feedback. We appreciate you taking the time.</p>
+  </div>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const requestId = params.get('id'); // review_requests row id
+  let selectedRating = 0;
+  let googleLink = '';
+
+  async function getSupabase() {
+    const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm');
+    return createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+  }
+
+  async function init() {
+    if (!requestId) {
+      document.getElementById('loading').textContent = 'Invalid link.';
+      return;
+    }
+
+    const supabase = await getSupabase();
+    const { data, error } = await supabase
+      .from('review_requests')
+      .select('business_name, google_review_link')
+      .eq('id', requestId)
+      .single();
+
+    if (error || !data) {
+      document.getElementById('loading').textContent = 'This link is no longer valid.';
+      return;
+    }
+
+    googleLink = data.google_review_link;
+    document.getElementById('bizName').textContent = data.business_name || 'Our Business';
+
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('ratingScreen').style.display = 'block';
+
+    // Star click handlers
+    document.querySelectorAll('.star').forEach(star => {
+      star.addEventListener('click', () => selectRating(parseInt(star.dataset.value)));
+    });
+  }
+
+  function showStars(upTo) {
+    document.querySelectorAll('.star').forEach(s => {
+      s.classList.toggle('active', parseInt(s.dataset.value) <= upTo);
+    });
+  }
+
+  async function selectRating(value) {
+    selectedRating = value;
+    showStars(value);
+
+    // Save rating to database
+    try {
+      const supabase = await getSupabase();
+      await supabase
+        .from('review_requests')
+        .update({ rating: value, feedback_submitted_at: new Date().toISOString() })
+        .eq('id', requestId);
+    } catch (e) { /* non-blocking */ }
+
+    setTimeout(() => {
+      document.getElementById('ratingScreen').style.display = 'none';
+
+      if (value >= 4) {
+        // POSITIVE -> redirect to Google
+        document.getElementById('positiveScreen').classList.add('show');
+        document.getElementById('manualRedirect').href = googleLink;
+        setTimeout(() => {
+          window.location.href = googleLink;
+        }, 1800);
+      } else {
+        // NEGATIVE -> private feedback flow
+        document.getElementById('negativeScreen').classList.add('show');
+        setTimeout(() => {
+          document.getElementById('negativeScreen').classList.remove('show');
+          document.getElementById('feedbackForm').classList.add('show');
+        }, 1800);
+      }
+    }, 400);
+  }
+
+  async function submitFeedback() {
+    const text = document.getElementById('feedbackText').value.trim();
+    const btn = document.getElementById('submitFeedbackBtn');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+
+    try {
+      const supabase = await getSupabase();
+      await supabase
+        .from('review_requests')
+        .update({ private_feedback: text || null })
+        .eq('id', requestId);
+    } catch (e) { /* non-blocking */ }
+
+    finishFeedback();
+  }
+
+  function skipFeedback() {
+    finishFeedback();
+  }
+
+  function finishFeedback() {
+    document.getElementById('feedbackForm').classList.remove('show');
+    document.getElementById('doneScreen').classList.add('show');
+  }
+
+  init();
+</script>
+
+</body>
+</html>
