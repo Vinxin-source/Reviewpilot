@@ -5,9 +5,8 @@
 
 // ── SUPABASE CONFIG ──
 // We fill these two values in after supabase setup
-window.SUPABASE_URL      = 'https://kknlpvjmdetlptdsafhz.supabase.co';
-window.SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtrbmxwdmptZGV0bHB0ZHNhZmh6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1MDg3NDAsImV4cCI6MjA5NzA4NDc0MH0.XGhDl_Ksr6yLrvKYB4cK8Bs8pq3pEh5ftGQ5471EYIU';
-
+window.SUPABASE_URL='https://kknlpvjmdetlptdsafhz.supabase.co';
+window.SUPABASE_ANON_KEY='sb_publishable_WlfN6pNKFn_pg4dhAR6dog_w1u99Dnm';
 // ── SUPABASE CLIENT ──
 async function getSupabase() {
   const { createClient } = await import(
