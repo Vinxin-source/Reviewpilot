@@ -246,7 +246,7 @@
     const googleLink = meta.google_review_link || 'https://reviewpilot.app';
 
     // Build QR scan URL — points to a scan landing that logs the scan + sends email
-    const scanURL = `${window.location.origin}/scan.html?uid=${user.id}`;
+    const scanURL = '${window.location.origin}/scan.html?uid=${user.id}';
 
     document.getElementById('cardBusiness').textContent = businessName;
     document.getElementById('loadingMsg').style.display = 'none';
