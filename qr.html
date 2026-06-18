@@ -245,9 +245,38 @@
     const businessName = meta.business_name || 'My Business';
     const googleLink = meta.google_review_link || 'https://reviewpilot.app';
 
-    // Build QR scan URL — points to a scan landing that logs the scan + sends email
-    const scanURL = '${window.location.origin}/scan.html?uid=${user.id}';
+    // Create a pending request for this scan, then build the feedback URL
+    const { data: newRequest } = await supabase
+      .from('review_requests')
+      .insert({
+        user_id: user.id,
+        business_name: businessName,
+        google_review_link: googleLink,
+        customer_name: 'QR Scan Customer',
+        status: 'qr_scan',
+        send_at: new Date().toISOString()
+      })
+      .select()
+      .single();
 
+    const scanURL = `${window.location.origin}/feedback.html?id=${newRequest?.id}`;
+
+// Create a pending request for this scan, then build the feedback URL
+    const { data: newRequest } = await supabase
+      .from('review_requests')
+      .insert({
+        user_id: user.id,
+        business_name: businessName,
+        google_review_link: googleLink,
+        customer_name: 'QR Scan Customer',
+        status: 'qr_scan',
+        send_at: new Date().toISOString()
+      })
+      .select()
+      .single();
+
+    const scanURL = `${window.location.origin}/feedback.html?id=${newRequest?.id}`;
+    
     document.getElementById('cardBusiness').textContent = businessName;
     document.getElementById('loadingMsg').style.display = 'none';
     document.getElementById('qrSection').style.display = 'block';
