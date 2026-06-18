@@ -343,7 +343,8 @@
             <th>Customer</th>
             <th>Contact</th>
             <th>Sent At</th>
-            <th>Status</th>
+            <th>Rating</th>
+            <th>Private Feedback</th>
           </tr>
         </thead>
         <tbody id="recentBody">
@@ -426,14 +427,15 @@
       return;
     }
 
-    document.getElementById('recentBody').innerHTML = data.map(r => `
+document.getElementById('recentBody').innerHTML = data.map(r => `
       <tr>
         <td>${r.customer_name}</td>
         <td style="color:#666">${r.customer_email || r.customer_phone || '—'}</td>
         <td style="color:#555">${new Date(r.created_at).toLocaleDateString('en-US', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' })}</td>
-        <td><span class="badge sent">Sent</span></td>
+        <td>${r.rating ? '⭐'.repeat(r.rating) : '<span style="color:#444">—</span>'}</td>
+        <td style="color:${r.rating && r.rating <= 3 ? '#f87171' : '#444'};max-width:200px;">${r.private_feedback || (r.rating && r.rating <= 3 ? '(no comment left)' : '—')}</td>
       </tr>
-    `).join('');
+    `).join(''); 
   }
 
   async function sendRequest() {
