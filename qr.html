@@ -149,7 +149,7 @@
 <div class="main">
   <p class="page-label">Your QR Code & Flyer</p>
   <h1>Print & Place on Your Counter</h1>
-  <p class="sub">Customers scan this after their visit. ReviewPilot automatically sends them a review request. No typing needed from you — ever.</p>
+  <p class="sub">Customers scan this after their visit. FameMap automatically sends them a review request. No typing needed from you — ever.</p>
 
   <!-- LOGO UPLOAD -->
   <div class="upload-panel">
@@ -173,7 +173,7 @@
       <div id="qrcode"></div>
       <div class="star-row">⭐⭐⭐⭐⭐</div>
       <div class="cta-text">Takes less than 1 minute.<br>We really appreciate it!</div>
-      <div class="brand">Powered by ReviewPilot</div>
+      <div class="brand">Powered by FameMap</div>
     </div>
 
     <div class="actions">
@@ -187,7 +187,7 @@
       <div class="tip"><div class="num">1</div><div>Place the printed flyer at your checkout counter, front desk, or anywhere customers pay or wait.</div></div>
       <div class="tip"><div class="num">2</div><div>Tell customers verbally: <em>"Feel free to scan that code and leave us a review — it really helps!"</em></div></div>
       <div class="tip"><div class="num">3</div><div>Put one in your waiting area too. The more they see it, the more likely they scan it.</div></div>
-      <div class="tip"><div class="num">4</div><div>ReviewPilot sends a follow-up reminder automatically — even if they forget, you're covered.</div></div>
+      <div class="tip"><div class="num">4</div><div>FameMap sends a follow-up reminder automatically — even if they forget, you're covered.</div></div>
     </div>
   </div>
 </div>
@@ -211,7 +211,7 @@
     currentUser = session.user;
     const meta = currentUser.user_metadata;
     businessName = meta.business_name || 'My Business';
-    googleLink = meta.google_review_link || 'https://reviewpilot.app';
+    googleLink = meta.google_review_link || 'https://FameMap.app';
 
     document.getElementById('cardBusiness').textContent = businessName;
 
@@ -295,7 +295,7 @@
     const canvas = document.querySelector('#qrcode canvas');
     if (!canvas) { alert('QR code not ready yet.'); return; }
     const link = document.createElement('a');
-    link.download = 'reviewpilot-qr-code.png';
+    link.download = 'FameMap-qr-code.png';
     link.href = canvas.toDataURL();
     link.click();
   }
@@ -366,7 +366,7 @@
       // Footer
       doc.setFontSize(8);
       doc.setTextColor(180, 180, 180);
-      doc.text('Powered by ReviewPilot', pageWidth / 2, 200, { align: 'center' });
+      doc.text('Powered by FameMap', pageWidth / 2, 200, { align: 'center' });
 
       doc.save(`${businessName.replace(/\s+/g, '-')}-review-flyer.pdf`);
 
