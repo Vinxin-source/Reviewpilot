@@ -3,185 +3,99 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ReviewPilot — Get More Google Reviews, Automatically</title>
+  <title>FameMap — Get More Google Reviews, Automatically</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #0f0f0f;
-      color: #f0f0f0;
-    }
+    body { font-family: 'Segoe UI', sans-serif; background: #0f0f0f; color: #f0f0f0; }
     nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.2rem 2rem;
-      border-bottom: 1px solid #222;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 2rem; border-bottom: 1px solid #222;
     }
     .logo { font-size: 1.4rem; font-weight: 700; color: #fff; }
     .logo span { color: #4ade80; }
-    nav a {
-      color: #aaa;
-      text-decoration: none;
-      margin-left: 1.5rem;
-      font-size: 0.9rem;
-    }
-    nav a.btn {
-      background: #4ade80;
-      color: #000;
-      padding: 0.5rem 1.2rem;
-      border-radius: 6px;
-      font-weight: 600;
-    }
-    .hero {
-      text-align: center;
-      padding: 6rem 2rem 4rem;
-      max-width: 750px;
-      margin: 0 auto;
-    }
+    nav a { color: #aaa; text-decoration: none; margin-left: 1.5rem; font-size: 0.9rem; }
+    nav a.btn { background: #4ade80; color: #000; padding: 0.5rem 1.2rem; border-radius: 6px; font-weight: 600; }
+
+    .hero { text-align: center; padding: 5rem 2rem 3rem; max-width: 750px; margin: 0 auto; }
     .badge {
-      display: inline-block;
-      background: #1a1a1a;
-      border: 1px solid #333;
-      color: #4ade80;
-      font-size: 0.75rem;
-      padding: 0.3rem 1rem;
-      border-radius: 999px;
-      margin-bottom: 1.5rem;
-      letter-spacing: 0.05em;
+      display: inline-block; background: #1a1a1a; border: 1px solid #333; color: #4ade80;
+      font-size: 0.75rem; padding: 0.3rem 1rem; border-radius: 999px; margin-bottom: 1.5rem; letter-spacing: 0.05em;
     }
-    h1 {
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      line-height: 1.15;
-      margin-bottom: 1.2rem;
-      font-weight: 800;
-    }
+    h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.15; margin-bottom: 1.2rem; font-weight: 800; }
     h1 span { color: #4ade80; }
-    .sub {
-      font-size: 1.1rem;
-      color: #999;
-      max-width: 55ch;
-      margin: 0 auto 2.5rem;
-      line-height: 1.7;
-    }
+    .sub { font-size: 1.1rem; color: #999; max-width: 55ch; margin: 0 auto 2.5rem; line-height: 1.7; }
     .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-    .btn-primary {
-      background: #4ade80;
-      color: #000;
-      padding: 0.85rem 2rem;
-      border-radius: 8px;
-      font-weight: 700;
-      text-decoration: none;
-      font-size: 1rem;
-    }
-    .btn-ghost {
-      border: 1px solid #333;
-      color: #ccc;
-      padding: 0.85rem 2rem;
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 1rem;
-    }
-    .social-proof {
-      text-align: center;
-      padding: 2rem;
-      color: #555;
-      font-size: 0.85rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-    .how {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 4rem 2rem;
-    }
-    .section-label {
-      text-align: center;
-      color: #4ade80;
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 0.75rem;
-    }
-    h2 {
-      text-align: center;
-      font-size: clamp(1.6rem, 4vw, 2.2rem);
-      margin-bottom: 3rem;
-    }
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
-    }
-    .step {
-      background: #161616;
-      border: 1px solid #222;
-      border-radius: 12px;
-      padding: 1.75rem;
-    }
-    .step-num {
-      font-size: 0.7rem;
-      color: #4ade80;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      margin-bottom: 0.75rem;
-    }
-    .step h3 { font-size: 1rem; margin-bottom: 0.5rem; }
-    .step p { font-size: 0.88rem; color: #777; line-height: 1.6; }
-    .pricing {
-      max-width: 420px;
-      margin: 0 auto;
-      padding: 4rem 2rem;
-      text-align: center;
-    }
-    .price-card {
-      background: #161616;
-      border: 1px solid #2a2a2a;
-      border-radius: 16px;
-      padding: 2.5rem;
-      margin-top: 2rem;
-    }
-    .price-card .amount {
-      font-size: 3rem;
-      font-weight: 800;
-      color: #4ade80;
-    }
-    .price-card .amount span { font-size: 1rem; color: #666; }
-    .price-card ul {
-      list-style: none;
-      text-align: left;
-      margin: 1.5rem 0 2rem;
-    }
-    .price-card ul li {
-      padding: 0.5rem 0;
-      color: #aaa;
-      font-size: 0.92rem;
-      border-bottom: 1px solid #1f1f1f;
-    }
-    .price-card ul li::before { content: '✓ '; color: #4ade80; }
-    .price-card .cta {
-      display: block;
-      background: #4ade80;
-      color: #000;
-      padding: 0.9rem;
-      border-radius: 8px;
-      font-weight: 700;
-      text-decoration: none;
-      font-size: 1rem;
-    }
-    footer {
-      text-align: center;
-      padding: 3rem 2rem;
-      color: #444;
-      font-size: 0.8rem;
+    .btn-primary { background: #4ade80; color: #000; padding: 0.85rem 2rem; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 1rem; }
+    .btn-ghost { border: 1px solid #333; color: #ccc; padding: 0.85rem 2rem; border-radius: 8px; text-decoration: none; font-size: 1rem; }
+    .social-proof { text-align: center; padding: 2rem; color: #555; font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase; }
+
+    /* EDUCATION SECTION */
+    .education {
+      max-width: 1000px; margin: 0 auto; padding: 4rem 2rem;
       border-top: 1px solid #1a1a1a;
     }
+    .section-label { text-align: center; color: #4ade80; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.75rem; }
+    h2 { text-align: center; font-size: clamp(1.6rem, 4vw, 2.2rem); margin-bottom: 1rem; }
+    .edu-sub { text-align: center; color: #888; max-width: 60ch; margin: 0 auto 3rem; font-size: 1rem; line-height: 1.65; }
+
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem; margin-bottom: 3rem;
+    }
+    .stat-box {
+      background: #161616; border: 1px solid #222; border-radius: 14px;
+      padding: 2rem 1.5rem; text-align: center;
+    }
+    .stat-num { font-size: 2.4rem; font-weight: 800; color: #4ade80; margin-bottom: 0.5rem; line-height: 1; }
+    .stat-desc { font-size: 0.88rem; color: #888; line-height: 1.5; }
+
+    .story-box {
+      background: linear-gradient(135deg, rgba(74,222,128,0.06), rgba(74,222,128,0.01));
+      border: 1px solid rgba(74,222,128,0.15);
+      border-radius: 16px; padding: 2.5rem; margin-bottom: 1rem;
+    }
+    .story-box h3 { font-size: 1.2rem; margin-bottom: 1rem; color: #fff; }
+    .story-box p { color: #aaa; font-size: 0.95rem; line-height: 1.75; margin-bottom: 1rem; }
+    .story-box p:last-child { margin-bottom: 0; }
+    .story-box strong { color: #4ade80; }
+
+    /* HOW IT WORKS */
+    .how { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; border-top: 1px solid #1a1a1a; }
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+    .step { background: #161616; border: 1px solid #222; border-radius: 12px; padding: 1.75rem; }
+    .step-num { font-size: 0.7rem; color: #4ade80; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+    .step h3 { font-size: 1rem; margin-bottom: 0.5rem; }
+    .step p { font-size: 0.88rem; color: #777; line-height: 1.6; }
+
+    /* HONEST COMPARISON */
+    .compare { max-width: 700px; margin: 0 auto; padding: 4rem 2rem; border-top: 1px solid #1a1a1a; }
+    .compare-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+    .compare-table th { padding: 0.75rem; text-align: left; color: #555; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .compare-table th:not(:first-child) { text-align: center; }
+    .compare-table td { padding: 0.9rem 0.75rem; border-top: 1px solid #1e1e1e; color: #ccc; }
+    .compare-table td:not(:first-child) { text-align: center; }
+    .compare-table .yes { color: #4ade80; font-weight: 700; }
+    .compare-table .no { color: #f87171; }
+    .compare-table .famemap-col { background: rgba(74,222,128,0.04); border-radius: 8px; }
+
+    /* PRICING */
+    .pricing { max-width: 420px; margin: 0 auto; padding: 4rem 2rem; text-align: center; border-top: 1px solid #1a1a1a; }
+    .price-card { background: #161616; border: 1px solid #2a2a2a; border-radius: 16px; padding: 2.5rem; margin-top: 2rem; }
+    .price-card .amount { font-size: 3rem; font-weight: 800; color: #4ade80; }
+    .price-card .amount span { font-size: 1rem; color: #666; }
+    .price-card ul { list-style: none; text-align: left; margin: 1.5rem 0 2rem; }
+    .price-card ul li { padding: 0.5rem 0; color: #aaa; font-size: 0.92rem; border-bottom: 1px solid #1f1f1f; }
+    .price-card ul li::before { content: '✓ '; color: #4ade80; }
+    .price-card .cta { display: block; background: #4ade80; color: #000; padding: 0.9rem; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 1rem; }
+    .no-contract { font-size: 0.8rem; color: #4ade80; margin-top: 1rem; }
+
+    footer { text-align: center; padding: 3rem 2rem; color: #444; font-size: 0.8rem; border-top: 1px solid #1a1a1a; }
   </style>
 </head>
 <body>
 
 <nav>
-  <div class="logo">Review<span>Pilot</span></div>
+  <div class="logo">Fame<span>Map</span></div>
   <div>
     <a href="/login.html">Log in</a>
     <a href="/signup.html" class="btn">Start Free Trial</a>
@@ -190,38 +104,115 @@
 
 <section class="hero">
   <div class="badge">🇺🇸 Built for US Local Businesses</div>
-  <h1>Get More Google Reviews<br><span>Without Lifting a Finger</span></h1>
-  <p class="sub">ReviewPilot automatically asks your customers for a Google review right after their visit — via text or email. Set it up once. Reviews come in on autopilot.</p>
+  <h1>Put Your Business<br><span>On The Map</span></h1>
+  <p class="sub">FameMap automatically asks your customers for a Google review right after their visit. No contracts. No hidden fees. Just more reviews, on autopilot.</p>
   <div class="hero-btns">
     <a href="/signup.html" class="btn-primary">Start Free — 7 Days Free</a>
-    <a href="#how" class="btn-ghost">See How It Works</a>
+    <a href="#why" class="btn-ghost">Why This Matters</a>
   </div>
 </section>
 
 <div class="social-proof">Works for barbers · nail salons · cleaners · trainers · handymen · and more</div>
 
-<section class="how" id="how">
-  <p class="section-label">How It Works</p>
-  <h2>Three ways to use it.<br>Zero tech skills needed.</h2>
+<!-- EDUCATION SECTION -->
+<section class="education" id="why">
+  <p class="section-label">Why This Actually Matters</p>
+  <h2>Reviews Aren't Just Stars.<br>They're Customers Walking Through Your Door.</h2>
+  <p class="edu-sub">Most business owners know reviews are "good to have." Few realize exactly how much they're losing by not having more of them. Here's the real picture:</p>
+
+  <div class="stats-grid">
+    <div class="stat-box">
+      <div class="stat-num">88%</div>
+      <div class="stat-desc">of customers trust online reviews as much as a recommendation from a friend</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">28%</div>
+      <div class="stat-desc">more clicks on Google Maps for businesses rated 4.5 stars or higher</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">10</div>
+      <div class="stat-desc">average number of reviews a customer reads before deciding to trust a business</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">0</div>
+      <div class="stat-desc">the number of unhappy customers who tell you directly — they just don't come back</div>
+    </div>
+  </div>
+
+  <div class="story-box">
+    <h3>Here's what actually happens without a system</h3>
+    <p>A happy customer leaves your shop feeling great. They mean to leave a review. They never do — life gets busy, and the moment passes. Multiply that by every satisfied customer you've ever had.</p>
+    <p>Meanwhile, an unhappy customer is far more likely to act on that feeling immediately — sometimes straight to a public 1-star review, before you ever get a chance to make it right.</p>
+    <p><strong>The result:</strong> your Google rating quietly drifts down over time, even though most of your customers are actually happy. Not because your service is bad — because the system to capture happiness is missing.</p>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <p class="section-label">How FameMap Fixes This</p>
+  <h2>Three ways to capture every happy customer.<br>Zero tech skills needed.</h2>
   <div class="steps">
     <div class="step">
       <div class="step-num">OPTION 01</div>
       <h3>📱 QR Code</h3>
-      <p>Print your unique QR code. Customer scans it after their visit. ReviewPilot texts them a review link automatically.</p>
+      <p>Print your unique QR code. Customer scans it after their visit. FameMap asks how it went — happy customers go straight to Google, unhappy ones come to you privately first.</p>
     </div>
     <div class="step">
       <div class="step-num">OPTION 02</div>
       <h3>✍️ Manual Entry</h3>
-      <p>Type in a customer's name and phone number after their visit. ReviewPilot sends the request automatically — 2 hours later.</p>
+      <p>Type in a customer's name and contact after their visit. FameMap sends the request automatically — timed perfectly, 2 hours later.</p>
     </div>
     <div class="step">
       <div class="step-num">OPTION 03</div>
       <h3>🔗 Connect Square</h3>
-      <p>Already use Square? Connect it once. ReviewPilot detects every completed appointment and sends requests with zero input from you.</p>
+      <p>Already use Square? Connect it once. FameMap detects every completed appointment and sends requests with zero input from you.</p>
     </div>
   </div>
 </section>
 
+<!-- HONEST COMPARISON -->
+<section class="compare">
+  <p class="section-label">The Honest Comparison</p>
+  <h2>Why Small Businesses Choose FameMap</h2>
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>Big Platforms</th>
+        <th class="famemap-col">FameMap</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Monthly Price</td>
+        <td class="no">$299–$900+</td>
+        <td class="famemap-col yes">$19</td>
+      </tr>
+      <tr>
+        <td>Contract Required</td>
+        <td class="no">Yes, 12 months</td>
+        <td class="famemap-col yes">No, cancel anytime</td>
+      </tr>
+      <tr>
+        <td>Hidden Fees</td>
+        <td class="no">Common</td>
+        <td class="famemap-col yes">None, ever</td>
+      </tr>
+      <tr>
+        <td>Setup Time</td>
+        <td class="no">Days, sales call required</td>
+        <td class="famemap-col yes">Under 5 minutes</td>
+      </tr>
+      <tr>
+        <td>Review Request Automation</td>
+        <td class="yes">Yes</td>
+        <td class="famemap-col yes">Yes</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- PRICING -->
 <section class="pricing">
   <p class="section-label">Pricing</p>
   <h2>Simple. Flat. Fair.</h2>
@@ -229,20 +220,20 @@
     <div class="amount">$19<span>/month</span></div>
     <ul>
       <li>Unlimited review requests</li>
-      <li>QR code for your counter</li>
+      <li>QR code + printable flyer</li>
+      <li>Private feedback for unhappy customers</li>
       <li>Manual customer entry</li>
       <li>Square integration</li>
-      <li>Weekly results email</li>
       <li>Your Google review link auto-generated</li>
-      <li>Cancel anytime</li>
     </ul>
     <a href="/signup.html" class="cta">Start Free Trial — No Card Needed</a>
+    <p class="no-contract">No contracts. Cancel in one click. Always.</p>
   </div>
 </section>
 
 <footer>
-  © 2026 ReviewPilot · Built for local businesses across America
+  © 2026 FameMap · Built for local businesses across America
 </footer>
-<script src="/app.js"></scripts>
-  </body>
+
+</body>
 </html>
