@@ -332,7 +332,13 @@
       }, 2500);
 
     } catch (err) {
-      errorMsg.textContent = err.message || 'Something went wrong. Please try again.';
+      if (err.message && err.message.toLowerCase().includes('already registered')) {
+        errorMsg.textContent = '⚠️ This email is already registered. Please log in instead.';
+      } else if (err.message && err.message.toLowerCase().includes('user already exists')) {
+        errorMsg.textContent = '⚠️ This email is already registered. Please log in instead.';
+      } else {
+        errorMsg.textContent = err.message || 'Something went wrong. Please try again.';
+      }
       errorMsg.classList.add('show');
       btn.disabled = false;
       btn.textContent = 'Create My Free Account';
