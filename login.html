@@ -6,148 +6,37 @@
   <title>FameMap — Log In</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #0f0f0f;
-      color: #f0f0f0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.2rem 2rem;
-      border-bottom: 1px solid #222;
-    }
-    .logo { font-size: 1.4rem; font-weight: 700; color: #fff; text-decoration: none; }
-    .logo span { color: #4ade80; }
-    nav a.signup {
-      color: #aaa;
-      text-decoration: none;
-      font-size: 0.9rem;
-    }
-    .page {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 3rem 1.5rem;
-    }
-    .card {
-      background: #161616;
-      border: 1px solid #222;
-      border-radius: 16px;
-      padding: 2.5rem;
-      width: 100%;
-      max-width: 400px;
-    }
-    .card h1 {
-      font-size: 1.6rem;
-      font-weight: 800;
-      margin-bottom: 0.4rem;
-    }
-    .card h1 span { color: #4ade80; }
-    .card .sub {
-      color: #666;
-      font-size: 0.88rem;
-      margin-bottom: 1.75rem;
-    }
+    body { font-family: 'Segoe UI', sans-serif; background: #fafaf8; color: #1a1a1a; min-height: 100vh; display: flex; flex-direction: column; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 2rem; border-bottom: 1px solid #e8e8e3; background: #fff; }
+    .logo { font-size: 1.4rem; font-weight: 700; color: #1a1a1a; text-decoration: none; }
+    .logo span { color: #16a34a; }
+    nav a.signup { color: #555; text-decoration: none; font-size: 0.9rem; }
+    .page { flex: 1; display: flex; align-items: center; justify-content: center; padding: 3rem 1.5rem; }
+    .card { background: #fff; border: 1px solid #e8e8e3; border-radius: 16px; padding: 2.5rem; width: 100%; max-width: 400px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
+    .card h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 0.4rem; color: #111; }
+    .card h1 span { color: #16a34a; }
+    .card .sub { color: #777; font-size: 0.88rem; margin-bottom: 1.75rem; }
     .field { margin-bottom: 1.1rem; }
-    label {
-      display: block;
-      font-size: 0.82rem;
-      color: #888;
-      margin-bottom: 0.4rem;
-    }
-    input {
-      width: 100%;
-      background: #0f0f0f;
-      border: 1px solid #2a2a2a;
-      color: #f0f0f0;
-      padding: 0.75rem 1rem;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      outline: none;
-      transition: border 0.2s;
-    }
-    input:focus { border-color: #4ade80; }
-    .forgot {
-      display: block;
-      text-align: right;
-      font-size: 0.78rem;
-      color: #4ade80;
-      text-decoration: none;
-      margin-top: 0.4rem;
-    }
-    .btn {
-      width: 100%;
-      background: #4ade80;
-      color: #000;
-      border: none;
-      padding: 0.9rem;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      margin-top: 0.75rem;
-      transition: opacity 0.2s;
-    }
+    label { display: block; font-size: 0.82rem; color: #555; margin-bottom: 0.4rem; }
+    input { width: 100%; background: #fff; border: 1px solid #d4d4cc; color: #1a1a1a; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.95rem; outline: none; transition: border 0.2s; }
+    input:focus { border-color: #16a34a; }
+    .forgot { display: block; text-align: right; font-size: 0.78rem; color: #16a34a; text-decoration: none; margin-top: 0.4rem; }
+    .btn { width: 100%; background: #16a34a; color: #fff; border: none; padding: 0.9rem; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 0.75rem; transition: opacity 0.2s; }
     .btn:hover { opacity: 0.9; }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    .error-msg {
-      background: rgba(239,68,68,0.1);
-      border: 1px solid rgba(239,68,68,0.3);
-      color: #f87171;
-      font-size: 0.82rem;
-      padding: 0.65rem 1rem;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      display: none;
-    }
+    .error-msg { background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; font-size: 0.82rem; padding: 0.65rem 1rem; border-radius: 8px; margin-bottom: 1rem; display: none; }
     .error-msg.show { display: block; }
-    .signup-link {
-      text-align: center;
-      font-size: 0.85rem;
-      color: #666;
-      margin-top: 1.5rem;
-    }
-    .signup-link a { color: #4ade80; text-decoration: none; }
-    .divider {
-      text-align: center;
-      color: #333;
-      font-size: 0.75rem;
-      margin: 1.25rem 0;
-    }
-    .trial-reminder {
-      background: rgba(74,222,128,0.05);
-      border: 1px solid rgba(74,222,128,0.15);
-      border-radius: 8px;
-      padding: 0.75rem 1rem;
-      font-size: 0.8rem;
-      color: #4ade80;
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
-    .spinner {
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      border: 2px solid #000;
-      border-top-color: transparent;
-      border-radius: 50%;
-      animation: spin 0.6s linear infinite;
-      vertical-align: middle;
-      margin-right: 6px;
-    }
+    .signup-link { text-align: center; font-size: 0.85rem; color: #777; margin-top: 1.5rem; }
+    .signup-link a { color: #16a34a; text-decoration: none; }
+    .trial-reminder { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 0.75rem 1rem; font-size: 0.8rem; color: #16a34a; margin-bottom: 1.5rem; text-align: center; }
+    .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid #fff; border-top-color: transparent; border-radius: 50%; animation: spin 0.6s linear infinite; vertical-align: middle; margin-right: 6px; }
     @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
 
 <nav>
-  <a href="/index.html" class="logo">Review<span>Pilot</span></a>
+  <a href="/index.html" class="logo">Fame<span>Map</span></a>
   <a href="/signup.html" class="signup">No account? Sign up free</a>
 </nav>
 
@@ -155,40 +44,20 @@
   <div class="card">
     <h1>Welcome <span>Back</span></h1>
     <p class="sub">Log in to your FameMap dashboard</p>
-
-    <div class="trial-reminder">
-      🎁 New here? <a href="/signup.html" style="color:#4ade80;font-weight:700;">Start your 7-day free trial →</a>
-    </div>
-
+    <div class="trial-reminder">🎁 New here? <a href="/signup.html" style="color:#16a34a;font-weight:700;">Start your 7-day free trial →</a></div>
     <div class="error-msg" id="errorMsg"></div>
-
-    <div class="field">
-      <label>Email Address</label>
-      <input type="email" id="email" placeholder="maria@example.com" />
-    </div>
-
+    <div class="field"><label>Email Address</label><input type="email" id="email" placeholder="maria@example.com" /></div>
     <div class="field">
       <label>Password</label>
       <input type="password" id="password" placeholder="Your password" />
       <a href="#" class="forgot" onclick="handleForgot(event)">Forgot password?</a>
     </div>
-
-    <button class="btn" id="loginBtn" onclick="handleLogin()">
-      Log In
-    </button>
-
-    <div class="signup-link">
-      Don't have an account? <a href="/signup.html">Start free trial</a>
-    </div>
+    <button class="btn" id="loginBtn" onclick="handleLogin()">Log In</button>
+    <div class="signup-link">Don't have an account? <a href="/signup.html">Start free trial</a></div>
   </div>
 </div>
 
 <script>
-  async function getSupabase() {
-    const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm');
-    return createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
-  }
-
   async function handleLogin() {
     const btn = document.getElementById('loginBtn');
     const errorMsg = document.getElementById('errorMsg');
@@ -209,16 +78,10 @@
     try {
       const supabase = await getSupabase();
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-
       if (error) throw error;
-
-      // Redirect to dashboard
       window.location.href = '/dashboard.html';
-
     } catch (err) {
-      errorMsg.textContent = err.message === 'Invalid login credentials'
-        ? 'Wrong email or password. Try again.'
-        : err.message || 'Something went wrong.';
+      errorMsg.textContent = err.message === 'Invalid login credentials' ? 'Wrong email or password. Try again.' : err.message || 'Something went wrong.';
       errorMsg.classList.add('show');
       btn.disabled = false;
       btn.textContent = 'Log In';
@@ -229,19 +92,17 @@
     e.preventDefault();
     const email = document.getElementById('email').value.trim();
     const errorMsg = document.getElementById('errorMsg');
-
     if (!email) {
       errorMsg.textContent = 'Enter your email address first, then click Forgot Password.';
       errorMsg.classList.add('show');
       return;
     }
-
     try {
       const supabase = await getSupabase();
       await supabase.auth.resetPasswordForEmail(email);
-      errorMsg.style.background = 'rgba(74,222,128,0.1)';
-      errorMsg.style.borderColor = 'rgba(74,222,128,0.3)';
-      errorMsg.style.color = '#4ade80';
+      errorMsg.style.background = '#f0fdf4';
+      errorMsg.style.borderColor = '#bbf7d0';
+      errorMsg.style.color = '#16a34a';
       errorMsg.textContent = '✅ Password reset email sent. Check your inbox.';
       errorMsg.classList.add('show');
     } catch (err) {
@@ -250,7 +111,6 @@
     }
   }
 
-  // If already logged in, skip to dashboard
   (async () => {
     try {
       const supabase = await getSupabase();
@@ -259,6 +119,7 @@
     } catch {}
   })();
 </script>
+
 <script src="/app.js"></script>
-  </body>
+</body>
 </html>
