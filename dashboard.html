@@ -6,238 +6,79 @@
   <title>FameMap — Dashboard</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #0f0f0f;
-      color: #f0f0f0;
-      min-height: 100vh;
-    }
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      border-bottom: 1px solid #1e1e1e;
-      background: #111;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .logo { font-size: 1.3rem; font-weight: 700; color: #fff; text-decoration: none; }
-    .logo span { color: #4ade80; }
+    body { font-family: 'Segoe UI', sans-serif; background: #fafaf8; color: #1a1a1a; min-height: 100vh; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; border-bottom: 1px solid #e8e8e3; background: #fff; position: sticky; top: 0; z-index: 100; }
+    .logo { font-size: 1.3rem; font-weight: 700; color: #1a1a1a; text-decoration: none; }
+    .logo span { color: #16a34a; }
     .nav-right { display: flex; align-items: center; gap: 1rem; }
-    .nav-right span { font-size: 0.85rem; color: #666; }
-    .btn-logout {
-      background: none;
-      border: 1px solid #2a2a2a;
-      color: #888;
-      padding: 0.4rem 0.9rem;
-      border-radius: 6px;
-      font-size: 0.82rem;
-      cursor: pointer;
-    }
-    .btn-logout:hover { border-color: #f87171; color: #f87171; }
+    .nav-right span { font-size: 0.85rem; color: #777; }
+    .btn-logout { background: none; border: 1px solid #d4d4cc; color: #555; padding: 0.4rem 0.9rem; border-radius: 6px; font-size: 0.82rem; cursor: pointer; }
+    .btn-logout:hover { border-color: #dc2626; color: #dc2626; }
 
-    /* TRIAL BANNER */
-    .trial-banner {
-      background: rgba(74,222,128,0.08);
-      border-bottom: 1px solid rgba(74,222,128,0.15);
-      padding: 0.65rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-    .trial-banner p { font-size: 0.85rem; color: #4ade80; }
-    .trial-banner a {
-      font-size: 0.82rem;
-      background: #4ade80;
-      color: #000;
-      padding: 0.35rem 0.9rem;
-      border-radius: 6px;
-      font-weight: 700;
-      text-decoration: none;
-    }
+    .trial-banner { background: #f0fdf4; border-bottom: 1px solid #bbf7d0; padding: 0.65rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+    .trial-banner p { font-size: 0.85rem; color: #16a34a; }
+    .trial-banner a { font-size: 0.82rem; background: #16a34a; color: #fff; padding: 0.35rem 0.9rem; border-radius: 6px; font-weight: 700; text-decoration: none; }
 
     .main { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
-
-    /* GREETING */
     .greeting { margin-bottom: 2rem; }
-    .greeting h1 { font-size: 1.6rem; font-weight: 800; }
-    .greeting h1 span { color: #4ade80; }
-    .greeting p { color: #666; font-size: 0.9rem; margin-top: 0.3rem; }
+    .greeting h1 { font-size: 1.6rem; font-weight: 800; color: #111; }
+    .greeting h1 span { color: #16a34a; }
+    .greeting p { color: #777; font-size: 0.9rem; margin-top: 0.3rem; }
 
-    /* STATS */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-    .stat-card {
-      background: #161616;
-      border: 1px solid #222;
-      border-radius: 12px;
-      padding: 1.25rem 1.5rem;
-    }
-    .stat-label { font-size: 0.75rem; color: #555; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
-    .stat-value { font-size: 2rem; font-weight: 800; color: #fff; }
-    .stat-value.green { color: #4ade80; }
-    .stat-sub { font-size: 0.75rem; color: #555; margin-top: 0.25rem; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { background: #fff; border: 1px solid #e8e8e3; border-radius: 12px; padding: 1.25rem 1.5rem; }
+    .stat-label { font-size: 0.75rem; color: #999; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+    .stat-value { font-size: 2rem; font-weight: 800; color: #111; }
+    .stat-value.green { color: #16a34a; }
+    .stat-sub { font-size: 0.75rem; color: #999; margin-top: 0.25rem; }
 
-    /* TWO COLUMNS */
-    .cols {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
+    .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
     @media (max-width: 640px) { .cols { grid-template-columns: 1fr; } }
+    .panel { background: #fff; border: 1px solid #e8e8e3; border-radius: 12px; padding: 1.5rem; }
+    .panel-title { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.1em; color: #999; margin-bottom: 1.25rem; }
 
-    .panel {
-      background: #161616;
-      border: 1px solid #222;
-      border-radius: 12px;
-      padding: 1.5rem;
-    }
-    .panel-title {
-      font-size: 0.82rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #555;
-      margin-bottom: 1.25rem;
-    }
-
-    /* SEND REQUEST FORM */
     .field { margin-bottom: 1rem; }
-    label { display: block; font-size: 0.8rem; color: #777; margin-bottom: 0.35rem; }
-    input {
-      width: 100%;
-      background: #0f0f0f;
-      border: 1px solid #2a2a2a;
-      color: #f0f0f0;
-      padding: 0.65rem 0.9rem;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      outline: none;
-      transition: border 0.2s;
-    }
-    input:focus { border-color: #4ade80; }
-    .send-btn {
-      width: 100%;
-      background: #4ade80;
-      color: #000;
-      border: none;
-      padding: 0.75rem;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      cursor: pointer;
-      margin-top: 0.25rem;
-      transition: opacity 0.2s;
-    }
+    label { display: block; font-size: 0.8rem; color: #555; margin-bottom: 0.35rem; }
+    input { width: 100%; background: #fff; border: 1px solid #d4d4cc; color: #1a1a1a; padding: 0.65rem 0.9rem; border-radius: 8px; font-size: 0.9rem; outline: none; transition: border 0.2s; }
+    input:focus { border-color: #16a34a; }
+    .send-btn { width: 100%; background: #16a34a; color: #fff; border: none; padding: 0.75rem; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer; margin-top: 0.25rem; transition: opacity 0.2s; }
     .send-btn:hover { opacity: 0.88; }
     .send-btn:disabled { opacity: 0.45; cursor: not-allowed; }
-    .send-note { font-size: 0.75rem; color: #555; margin-top: 0.6rem; text-align: center; }
+    .send-note { font-size: 0.75rem; color: #999; margin-top: 0.6rem; text-align: center; }
 
-    .success-flash {
-      background: rgba(74,222,128,0.1);
-      border: 1px solid rgba(74,222,128,0.25);
-      color: #4ade80;
-      font-size: 0.82rem;
-      padding: 0.6rem 0.9rem;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      display: none;
-    }
+    .success-flash { background: #f0fdf4; border: 1px solid #bbf7d0; color: #16a34a; font-size: 0.82rem; padding: 0.6rem 0.9rem; border-radius: 8px; margin-bottom: 1rem; display: none; }
     .success-flash.show { display: block; }
-    .error-flash {
-      background: rgba(239,68,68,0.1);
-      border: 1px solid rgba(239,68,68,0.25);
-      color: #f87171;
-      font-size: 0.82rem;
-      padding: 0.6rem 0.9rem;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      display: none;
-    }
+    .error-flash { background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; font-size: 0.82rem; padding: 0.6rem 0.9rem; border-radius: 8px; margin-bottom: 1rem; display: none; }
     .error-flash.show { display: block; }
 
-    /* QUICK LINKS */
     .quick-links { display: flex; flex-direction: column; gap: 0.75rem; }
-    .quick-link {
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-      padding: 0.85rem 1rem;
-      background: #0f0f0f;
-      border: 1px solid #1e1e1e;
-      border-radius: 10px;
-      text-decoration: none;
-      color: #ccc;
-      font-size: 0.88rem;
-      transition: border-color 0.2s;
-    }
-    .quick-link:hover { border-color: #4ade80; color: #fff; }
+    .quick-link { display: flex; align-items: center; gap: 0.85rem; padding: 0.85rem 1rem; background: #fafaf8; border: 1px solid #e8e8e3; border-radius: 10px; text-decoration: none; color: #333; font-size: 0.88rem; transition: border-color 0.2s; }
+    .quick-link:hover { border-color: #16a34a; color: #111; }
     .quick-link .icon { font-size: 1.2rem; }
-    .quick-link .arrow { margin-left: auto; color: #444; }
+    .quick-link .arrow { margin-left: auto; color: #ccc; }
 
-    /* RECENT TABLE */
     .recent { margin-bottom: 2rem; }
-    .recent-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
-    .recent-header h2 { font-size: 1rem; font-weight: 700; }
-    .recent-header span { font-size: 0.78rem; color: #555; }
+    .recent-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+    .recent-header h2 { font-size: 1rem; font-weight: 700; color: #111; }
+    .recent-header span { font-size: 0.78rem; color: #999; }
     .table-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-    th {
-      text-align: left;
-      color: #555;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 0.5rem 0.75rem;
-      border-bottom: 1px solid #1e1e1e;
-    }
-    td {
-      padding: 0.75rem;
-      border-bottom: 1px solid #1a1a1a;
-      color: #ccc;
-    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; background: #fff; border-radius: 10px; }
+    th { text-align: left; color: #999; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.5rem 0.75rem; border-bottom: 1px solid #e8e8e3; }
+    td { padding: 0.75rem; border-bottom: 1px solid #f0f0ec; color: #333; }
     tr:last-child td { border-bottom: none; }
-    .badge {
-      display: inline-block;
-      padding: 0.2rem 0.6rem;
-      border-radius: 999px;
-      font-size: 0.7rem;
-      font-weight: 600;
-    }
-    .badge.sent { background: rgba(74,222,128,0.1); color: #4ade80; }
-    .badge.pending { background: rgba(250,204,21,0.1); color: #facc15; }
-    .badge.empty { color: #444; font-size: 0.82rem; }
+    .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 999px; font-size: 0.7rem; font-weight: 600; }
+    .badge.sent { background: #f0fdf4; color: #16a34a; }
+    .badge.pending { background: #fefce8; color: #ca8a04; }
+    .badge.empty { color: #ccc; font-size: 0.82rem; }
 
-    .spinner {
-      display: inline-block;
-      width: 14px; height: 14px;
-      border: 2px solid #000;
-      border-top-color: transparent;
-      border-radius: 50%;
-      animation: spin 0.6s linear infinite;
-      vertical-align: middle;
-      margin-right: 5px;
-    }
+    .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid #fff; border-top-color: transparent; border-radius: 50%; animation: spin 0.6s linear infinite; vertical-align: middle; margin-right: 5px; }
     @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
 
 <nav>
-  <a href="/dashboard.html" class="logo">Review<span>Pilot</span></a>
+  <a href="/dashboard.html" class="logo">Fame<span>Map</span></a>
   <div class="nav-right">
     <span id="navBusiness">Loading...</span>
     <button class="btn-logout" onclick="handleLogout()">Log out</button>
@@ -250,192 +91,106 @@
 </div>
 
 <div class="main">
-
-  <!-- GREETING -->
   <div class="greeting">
     <h1>Hey, <span id="greetName">there</span> 👋</h1>
     <p id="greetSub">Here's how your reviews are doing this week.</p>
   </div>
 
-  <!-- STATS -->
   <div class="stats">
-    <div class="stat-card">
-      <div class="stat-label">Requests Sent</div>
-      <div class="stat-value" id="statSent">—</div>
-      <div class="stat-sub">Total all time</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Sent This Week</div>
-      <div class="stat-value green" id="statWeek">—</div>
-      <div class="stat-sub">Last 7 days</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Trial Days Left</div>
-      <div class="stat-value" id="statTrial">—</div>
-      <div class="stat-sub">Then $19/month</div>
-    </div>
+    <div class="stat-card"><div class="stat-label">Requests Sent</div><div class="stat-value" id="statSent">—</div><div class="stat-sub">Total all time</div></div>
+    <div class="stat-card"><div class="stat-label">Sent This Week</div><div class="stat-value green" id="statWeek">—</div><div class="stat-sub">Last 7 days</div></div>
+    <div class="stat-card"><div class="stat-label">Trial Days Left</div><div class="stat-value" id="statTrial">—</div><div class="stat-sub">Then $19/month</div></div>
   </div>
 
-  <!-- TWO COLUMNS -->
   <div class="cols">
-
-    <!-- SEND REQUEST -->
     <div class="panel">
       <div class="panel-title">✍️ Send a Review Request</div>
       <div class="success-flash" id="sendSuccess">✅ Request sent! They'll receive it in about 2 hours.</div>
       <div class="error-flash" id="sendError"></div>
-      <div class="field">
-        <label>Customer Name</label>
-        <input type="text" id="custName" placeholder="e.g. James Williams" />
-      </div>
-      <div class="field">
-        <label>Customer Email</label>
-        <input type="email" id="custEmail" placeholder="james@example.com" />
-      </div>
-      <div class="field">
-        <label>Customer Phone <span style="color:#444">(optional)</span></label>
-        <input type="tel" id="custPhone" placeholder="+1 555 000 0000" />
-      </div>
-      <button class="send-btn" id="sendBtn" onclick="sendRequest()">
-        Send Review Request
-      </button>
+      <div class="field"><label>Customer Name</label><input type="text" id="custName" placeholder="e.g. James Williams" /></div>
+      <div class="field"><label>Customer Email</label><input type="email" id="custEmail" placeholder="james@example.com" /></div>
+      <div class="field"><label>Customer Phone (optional)</label><input type="tel" id="custPhone" placeholder="+1 555 000 0000" /></div>
+      <button class="send-btn" id="sendBtn" onclick="sendRequest()">Send Review Request</button>
       <p class="send-note">Request is sent automatically 2 hours after you click send.</p>
     </div>
 
-    <!-- QUICK LINKS -->
     <div class="panel">
       <div class="panel-title">⚡ Quick Actions</div>
       <div class="quick-links">
-        <a href="/qr.html" class="quick-link">
-          <span class="icon">📱</span>
-          <span>My QR Code — Print for counter</span>
-          <span class="arrow">→</span>
-        </a>
-        <a href="/refer.html" class="quick-link">
-          <span class="icon">🎁</span>
-          <span>Refer a business — Get 15 free days</span>
-          <span class="arrow">→</span>
-        </a>
-        <a href="/onboarding.html" class="quick-link">
-          <span class="icon">🔗</span>
-          <span>Connect Square — Auto-mode</span>
-          <span class="arrow">→</span>
-        </a>
-        <a href="#" class="quick-link" onclick="copyReviewLink(event)">
-          <span class="icon">⭐</span>
-          <span>Copy my Google Review link</span>
-          <span class="arrow">→</span>
-        </a>
+        <a href="/qr.html" class="quick-link"><span class="icon">📱</span><span>My QR Code — Print for counter</span><span class="arrow">→</span></a>
+        <a href="/refer.html" class="quick-link"><span class="icon">🎁</span><span>Refer a business — Get 15 free days</span><span class="arrow">→</span></a>
+        <a href="/onboarding.html" class="quick-link"><span class="icon">🔗</span><span>Connect Square — Auto-mode</span><span class="arrow">→</span></a>
+        <a href="#" class="quick-link" onclick="copyReviewLink(event)"><span class="icon">⭐</span><span>Copy my Google Review link</span><span class="arrow">→</span></a>
       </div>
     </div>
   </div>
 
-  <!-- RECENT REQUESTS -->
   <div class="recent">
-    <div class="recent-header">
-      <h2>Recent Requests</h2>
-      <span id="recentCount">Loading...</span>
-    </div>
+    <div class="recent-header"><h2>Recent Requests</h2><span id="recentCount">Loading...</span></div>
     <div class="table-wrap">
       <table>
-        <thead>
-          <tr>
-            <th>Customer</th>
-            <th>Contact</th>
-            <th>Sent At</th>
-            <th>Rating</th>
-            <th>Private Feedback</th>
-          </tr>
-        </thead>
-        <tbody id="recentBody">
-          <tr><td colspan="4" style="color:#444;padding:1.5rem 0.75rem;">Loading...</td></tr>
-        </tbody>
+        <thead><tr><th>Customer</th><th>Contact</th><th>Sent At</th><th>Rating</th><th>Private Feedback</th></tr></thead>
+        <tbody id="recentBody"><tr><td colspan="5" style="color:#ccc;padding:1.5rem 0.75rem;">Loading...</td></tr></tbody>
       </table>
     </div>
   </div>
-
 </div>
 
 <script>
   let currentUser = null;
-  let businessData = null;
-
-  async function getSupabase() {
-    const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm');
-    return createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
-  }
 
   async function init() {
     const supabase = await getSupabase();
     const { data: { session } } = await supabase.auth.getSession();
-
-    if (!session) {
-      window.location.href = '/login.html';
-      return;
-    }
+    if (!session) { window.location.href = '/login.html'; return; }
 
     currentUser = session.user;
     const meta = currentUser.user_metadata;
 
-    // Set greeting
     const firstName = (meta.full_name || 'there').split(' ')[0];
     document.getElementById('greetName').textContent = firstName;
     document.getElementById('navBusiness').textContent = meta.business_name || 'My Business';
 
-    // Trial days left
     const trialEnds = new Date(meta.trial_ends);
     const daysLeft = Math.max(0, Math.ceil((trialEnds - Date.now()) / 86400000));
     document.getElementById('statTrial').textContent = daysLeft;
 
     if (daysLeft <= 3) {
       document.getElementById('trialBanner').style.display = 'flex';
-      document.getElementById('trialMsg').textContent =
-        daysLeft === 0
-          ? '⚠️ Your trial has ended. Upgrade to keep sending requests.'
-          : `⏳ ${daysLeft} day${daysLeft === 1 ? '' : 's'} left in your free trial.`;
+      document.getElementById('trialMsg').textContent = daysLeft === 0 ? '⚠️ Your trial has ended. Upgrade to keep sending requests.' : `⏳ ${daysLeft} day${daysLeft === 1 ? '' : 's'} left in your free trial.`;
     }
 
-    // Load requests from Supabase
     await loadRequests(supabase);
   }
 
   async function loadRequests(supabase) {
-    const { data, error } = await supabase
-      .from('review_requests')
-      .select('*')
-      .eq('user_id', currentUser.id)
-      .order('created_at', { ascending: false })
-      .limit(20);
+    const { data, error } = await supabase.from('review_requests').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false }).limit(20);
 
     if (error || !data) {
-      document.getElementById('recentBody').innerHTML =
-        '<tr><td colspan="4" style="color:#444;padding:1rem 0.75rem;">Could not load requests.</td></tr>';
+      document.getElementById('recentBody').innerHTML = '<tr><td colspan="5" style="color:#ccc;padding:1rem 0.75rem;">Could not load requests.</td></tr>';
       return;
     }
 
-    // Stats
     document.getElementById('statSent').textContent = data.length;
     const weekAgo = Date.now() - 7 * 86400000;
     const thisWeek = data.filter(r => new Date(r.created_at) > weekAgo).length;
     document.getElementById('statWeek').textContent = thisWeek;
     document.getElementById('recentCount').textContent = `${data.length} total`;
 
-    // Table
     if (data.length === 0) {
-      document.getElementById('recentBody').innerHTML =
-        '<tr><td colspan="4" style="color:#444;padding:1.5rem 0.75rem;">No requests yet. Send your first one above ↑</td></tr>';
+      document.getElementById('recentBody').innerHTML = '<tr><td colspan="5" style="color:#ccc;padding:1.5rem 0.75rem;">No requests yet. Send your first one above ↑</td></tr>';
       return;
     }
 
-document.getElementById('recentBody').innerHTML = data.map(r => `
+    document.getElementById('recentBody').innerHTML = data.map(r => `
       <tr>
         <td>${r.customer_name}</td>
-        <td style="color:#666">${r.customer_email || r.customer_phone || '—'}</td>
-        <td style="color:#555">${new Date(r.created_at).toLocaleDateString('en-US', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' })}</td>
-        <td>${r.rating ? '⭐'.repeat(r.rating) : '<span style="color:#444">—</span>'}</td>
-        <td style="color:${r.rating && r.rating <= 3 ? '#f87171' : '#444'};max-width:200px;">${r.private_feedback || (r.rating && r.rating <= 3 ? '(no comment left)' : '—')}</td>
+        <td style="color:#777">${r.customer_email || r.customer_phone || '—'}</td>
+        <td style="color:#999">${new Date(r.created_at).toLocaleDateString('en-US', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' })}</td>
+        <td>${r.rating ? '⭐'.repeat(r.rating) : '<span style="color:#ccc">—</span>'}</td>
+        <td style="color:${r.rating && r.rating <= 3 ? '#dc2626' : '#ccc'};max-width:200px;">${r.private_feedback || (r.rating && r.rating <= 3 ? '(no comment left)' : '—')}</td>
       </tr>
-    `).join(''); 
+    `).join('');
   }
 
   async function sendRequest() {
@@ -461,7 +216,6 @@ document.getElementById('recentBody').innerHTML = data.map(r => `
     try {
       const supabase = await getSupabase();
       const meta = currentUser.user_metadata;
-
       const { error } = await supabase.from('review_requests').insert({
         user_id: currentUser.id,
         business_name: meta.business_name,
@@ -479,7 +233,6 @@ document.getElementById('recentBody').innerHTML = data.map(r => `
       document.getElementById('custName').value = '';
       document.getElementById('custEmail').value = '';
       document.getElementById('custPhone').value = '';
-
       await loadRequests(supabase);
 
     } catch (err) {
@@ -507,6 +260,7 @@ document.getElementById('recentBody').innerHTML = data.map(r => `
 
   init();
 </script>
+
 <script src="/app.js"></script>
-  </body>
+</body>
 </html>
