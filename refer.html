@@ -6,242 +6,80 @@
   <title>FameMap — Refer & Earn</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #0f0f0f;
-      color: #f0f0f0;
-      min-height: 100vh;
-    }
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      border-bottom: 1px solid #1e1e1e;
-      background: #111;
-    }
-    .logo { font-size: 1.3rem; font-weight: 700; color: #fff; text-decoration: none; }
-    .logo span { color: #4ade80; }
-    nav a.back { font-size: 0.85rem; color: #666; text-decoration: none; }
-    nav a.back:hover { color: #4ade80; }
+    body { font-family: 'Segoe UI', sans-serif; background: #fafaf8; color: #1a1a1a; min-height: 100vh; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; border-bottom: 1px solid #e8e8e3; background: #fff; }
+    .logo { font-size: 1.3rem; font-weight: 700; color: #1a1a1a; text-decoration: none; }
+    .logo span { color: #16a34a; }
+    nav a.back { font-size: 0.85rem; color: #777; text-decoration: none; }
+    nav a.back:hover { color: #16a34a; }
 
-    .main {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 3rem 1.5rem;
-    }
+    .main { max-width: 680px; margin: 0 auto; padding: 3rem 1.5rem; }
+    .page-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em; color: #16a34a; margin-bottom: 0.75rem; }
+    h1 { font-size: 1.9rem; font-weight: 800; margin-bottom: 0.5rem; color: #111; }
+    h1 span { color: #16a34a; }
+    .sub { color: #777; font-size: 0.92rem; margin-bottom: 2.5rem; line-height: 1.65; max-width: 55ch; }
 
-    .page-label {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: #4ade80;
-      margin-bottom: 0.75rem;
-    }
-    h1 { font-size: 1.9rem; font-weight: 800; margin-bottom: 0.5rem; }
-    h1 span { color: #4ade80; }
-    .sub {
-      color: #666;
-      font-size: 0.92rem;
-      margin-bottom: 2.5rem;
-      line-height: 1.65;
-      max-width: 55ch;
-    }
-
-    /* HOW IT WORKS */
-    .how {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2.5rem;
-    }
-    .how-card {
-      background: #161616;
-      border: 1px solid #222;
-      border-radius: 12px;
-      padding: 1.25rem;
-    }
+    .how { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+    .how-card { background: #fff; border: 1px solid #e8e8e3; border-radius: 12px; padding: 1.25rem; }
     .how-card .icon { font-size: 1.5rem; margin-bottom: 0.6rem; }
-    .how-card h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.4rem; }
-    .how-card p { font-size: 0.8rem; color: #666; line-height: 1.5; }
+    .how-card h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.4rem; color: #111; }
+    .how-card p { font-size: 0.8rem; color: #777; line-height: 1.5; }
 
-    /* REFERRAL LINK BOX */
-    .link-panel {
-      background: #161616;
-      border: 1px solid #2a2a2a;
-      border-radius: 14px;
-      padding: 1.75rem;
-      margin-bottom: 2rem;
-    }
-    .link-panel h2 {
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 0.4rem;
-    }
-    .link-panel p {
-      font-size: 0.82rem;
-      color: #666;
-      margin-bottom: 1.25rem;
-    }
-    .link-row {
-      display: flex;
-      gap: 0.75rem;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .link-box {
-      flex: 1;
-      background: #0f0f0f;
-      border: 1px solid #2a2a2a;
-      border-radius: 8px;
-      padding: 0.7rem 1rem;
-      font-size: 0.82rem;
-      color: #4ade80;
-      font-family: monospace;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      min-width: 0;
-    }
-    .btn-copy {
-      background: #4ade80;
-      color: #000;
-      border: none;
-      padding: 0.7rem 1.25rem;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.88rem;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: opacity 0.2s;
-    }
+    .link-panel { background: #fff; border: 1px solid #e8e8e3; border-radius: 14px; padding: 1.75rem; margin-bottom: 2rem; }
+    .link-panel h2 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; color: #111; }
+    .link-panel p { font-size: 0.82rem; color: #777; margin-bottom: 1.25rem; }
+    .link-row { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+    .link-box { flex: 1; background: #fafaf8; border: 1px solid #d4d4cc; border-radius: 8px; padding: 0.7rem 1rem; font-size: 0.82rem; color: #16a34a; font-family: monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+    .btn-copy { background: #16a34a; color: #fff; border: none; padding: 0.7rem 1.25rem; border-radius: 8px; font-weight: 700; font-size: 0.88rem; cursor: pointer; white-space: nowrap; transition: opacity 0.2s; }
     .btn-copy:hover { opacity: 0.88; }
-    .copied-flash {
-      font-size: 0.78rem;
-      color: #4ade80;
-      margin-top: 0.6rem;
-      display: none;
-    }
+    .copied-flash { font-size: 0.78rem; color: #16a34a; margin-top: 0.6rem; display: none; }
     .copied-flash.show { display: block; }
 
-    /* SHARE BUTTONS */
-    .share-title {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #555;
-      margin: 1.5rem 0 0.75rem;
-    }
+    .share-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #999; margin: 1.5rem 0 0.75rem; }
     .share-btns { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-    .share-btn {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.65rem 1.1rem;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      text-decoration: none;
-    }
-    .share-sms { background: #1a3a1a; color: #4ade80; border: 1px solid #2a4a2a; }
-    .share-wa { background: #1a3a1a; color: #25d366; border: 1px solid #1f4a2a; }
-    .share-email { background: #1a1a2e; color: #818cf8; border: 1px solid #2a2a4a; }
+    .share-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.65rem 1.1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; border: none; text-decoration: none; }
+    .share-sms { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+    .share-wa { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+    .share-email { background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; }
 
-    /* STATS */
-    .stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-    .stat-card {
-      background: #161616;
-      border: 1px solid #222;
-      border-radius: 12px;
-      padding: 1.25rem 1.5rem;
-      text-align: center;
-    }
-    .stat-label { font-size: 0.72rem; color: #555; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
-    .stat-value { font-size: 2rem; font-weight: 800; color: #4ade80; }
-    .stat-sub { font-size: 0.72rem; color: #444; margin-top: 0.25rem; }
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { background: #fff; border: 1px solid #e8e8e3; border-radius: 12px; padding: 1.25rem 1.5rem; text-align: center; }
+    .stat-label { font-size: 0.72rem; color: #999; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+    .stat-value { font-size: 2rem; font-weight: 800; color: #16a34a; }
+    .stat-sub { font-size: 0.72rem; color: #ccc; margin-top: 0.25rem; }
 
-    /* REFERRAL TABLE */
-    .recent-title {
-      font-size: 0.85rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: #888;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-    th {
-      text-align: left;
-      color: #555;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 0.5rem 0.75rem;
-      border-bottom: 1px solid #1e1e1e;
-    }
-    td { padding: 0.75rem; border-bottom: 1px solid #1a1a1a; color: #ccc; }
+    .recent-title { font-size: 0.85rem; font-weight: 700; margin-bottom: 1rem; color: #555; text-transform: uppercase; letter-spacing: 0.08em; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; background: #fff; border-radius: 10px; }
+    th { text-align: left; color: #999; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.5rem 0.75rem; border-bottom: 1px solid #e8e8e3; }
+    td { padding: 0.75rem; border-bottom: 1px solid #f0f0ec; color: #333; }
     tr:last-child td { border-bottom: none; }
-    .badge {
-      display: inline-block;
-      padding: 0.2rem 0.6rem;
-      border-radius: 999px;
-      font-size: 0.7rem;
-      font-weight: 600;
-    }
-    .badge.paid { background: rgba(74,222,128,0.1); color: #4ade80; }
-    .badge.pending { background: rgba(250,204,21,0.1); color: #facc15; }
+    .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 999px; font-size: 0.7rem; font-weight: 600; }
+    .badge.paid { background: #f0fdf4; color: #16a34a; }
+    .badge.pending { background: #fefce8; color: #ca8a04; }
 
-    .empty-state {
-      text-align: center;
-      padding: 2.5rem 1rem;
-      color: #444;
-      font-size: 0.88rem;
-      background: #161616;
-      border: 1px solid #1e1e1e;
-      border-radius: 12px;
-    }
+    .empty-state { text-align: center; padding: 2.5rem 1rem; color: #ccc; font-size: 0.88rem; background: #fff; border: 1px solid #e8e8e3; border-radius: 12px; }
     .empty-state .big { font-size: 2rem; margin-bottom: 0.5rem; }
   </style>
 </head>
 <body>
+<script src="/app.js"></script>
 
 <nav>
-  <a href="/dashboard.html" class="logo">Review<span>Pilot</span></a>
+  <a href="/dashboard.html" class="logo">Fame<span>Map</span></a>
   <a href="/dashboard.html" class="back">← Back to Dashboard</a>
 </nav>
 
 <div class="main">
   <p class="page-label">Refer & Earn</p>
   <h1>Share FameMap.<br><span>Both of you win.</span></h1>
-  <p class="sub">Refer another local business. When they subscribe, you both get <strong style="color:#f0f0f0;">15 extra free days</strong>. No limit — refer 10 businesses, get 150 free days.</p>
+  <p class="sub">Refer another local business. When they subscribe, you both get <strong style="color:#111;">15 extra free days</strong>. No limit — refer 10 businesses, get 150 free days.</p>
 
-  <!-- HOW IT WORKS -->
   <div class="how">
-    <div class="how-card">
-      <div class="icon">🔗</div>
-      <h3>Share Your Link</h3>
-      <p>Send your unique referral link to any local business owner you know.</p>
-    </div>
-    <div class="how-card">
-      <div class="icon">✅</div>
-      <h3>They Sign Up & Pay</h3>
-      <p>When they start a paid subscription, the reward triggers automatically.</p>
-    </div>
-    <div class="how-card">
-      <div class="icon">🎁</div>
-      <h3>You Both Get 15 Days</h3>
-      <p>You get 15 free days added. They get 15 free days on top of the 7-day trial.</p>
-    </div>
+    <div class="how-card"><div class="icon">🔗</div><h3>Share Your Link</h3><p>Send your unique referral link to any local business owner you know.</p></div>
+    <div class="how-card"><div class="icon">✅</div><h3>They Sign Up & Pay</h3><p>When they start a paid subscription, the reward triggers automatically.</p></div>
+    <div class="how-card"><div class="icon">🎁</div><h3>You Both Get 15 Days</h3><p>You get 15 free days added. They get 15 free days on top of the 7-day trial.</p></div>
   </div>
 
-  <!-- LINK BOX -->
   <div class="link-panel">
     <h2>Your Referral Link</h2>
     <p>Copy this and send it to business owners you know — barbers, cleaners, trainers, anyone.</p>
@@ -259,38 +97,19 @@
     </div>
   </div>
 
-  <!-- STATS -->
   <div class="stats">
-    <div class="stat-card">
-      <div class="stat-label">Total Referrals</div>
-      <div class="stat-value" id="totalRefs">0</div>
-      <div class="stat-sub">businesses referred</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Free Days Earned</div>
-      <div class="stat-value" id="daysEarned">0</div>
-      <div class="stat-sub">days added to your account</div>
-    </div>
+    <div class="stat-card"><div class="stat-label">Total Referrals</div><div class="stat-value" id="totalRefs">0</div><div class="stat-sub">businesses referred</div></div>
+    <div class="stat-card"><div class="stat-label">Free Days Earned</div><div class="stat-value" id="daysEarned">0</div><div class="stat-sub">days added to your account</div></div>
   </div>
 
-  <!-- REFERRAL HISTORY -->
   <div class="recent-title">Your Referrals</div>
   <div id="refHistory">
-    <div class="empty-state">
-      <div class="big">🤝</div>
-      <div>No referrals yet. Share your link and start earning!</div>
-    </div>
+    <div class="empty-state"><div class="big">🤝</div><div>No referrals yet. Share your link and start earning!</div></div>
   </div>
-
 </div>
 
 <script>
   let refLink = '';
-
-  async function getSupabase() {
-    const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm');
-    return createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
-  }
 
   async function init() {
     const supabase = await getSupabase();
@@ -298,23 +117,15 @@
     if (!session) { window.location.href = '/login.html'; return; }
 
     const user = session.user;
-
-    // Build referral link using user ID as code
     refLink = `${window.location.origin}/signup.html?ref=${user.id}`;
     document.getElementById('refLink').textContent = refLink;
 
-    // Share links
     const msg = encodeURIComponent(`Hey! I've been using FameMap to get more Google reviews for my business automatically. You should try it — first 7 days are free: ${refLink}`);
     document.getElementById('shareSMS').href = `sms:?body=${msg}`;
     document.getElementById('shareWA').href = `https://wa.me/?text=${msg}`;
     document.getElementById('shareEmail').href = `mailto:?subject=Get more Google reviews automatically&body=${decodeURIComponent(msg)}`;
 
-    // Load referral records
-    const { data: refs } = await supabase
-      .from('referrals')
-      .select('*')
-      .eq('referrer_id', user.id)
-      .order('created_at', { ascending: false });
+    const { data: refs } = await supabase.from('referrals').select('*').eq('referrer_id', user.id).order('created_at', { ascending: false });
 
     if (refs && refs.length > 0) {
       const paidRefs = refs.filter(r => r.status === 'paid');
@@ -323,21 +134,14 @@
 
       document.getElementById('refHistory').innerHTML = `
         <table>
-          <thead>
-            <tr>
-              <th>Business</th>
-              <th>Joined</th>
-              <th>Status</th>
-              <th>Days Earned</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Business</th><th>Joined</th><th>Status</th><th>Days Earned</th></tr></thead>
           <tbody>
             ${refs.map(r => `
               <tr>
                 <td>${r.referred_business || 'Business'}</td>
-                <td style="color:#555">${new Date(r.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                <td style="color:#999">${new Date(r.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
                 <td><span class="badge ${r.status}">${r.status === 'paid' ? '✅ Subscribed' : '⏳ Trial'}</span></td>
-                <td style="color:#4ade80">${r.status === 'paid' ? '+15 days' : '—'}</td>
+                <td style="color:#16a34a">${r.status === 'paid' ? '+15 days' : '—'}</td>
               </tr>
             `).join('')}
           </tbody>
@@ -355,6 +159,6 @@
 
   init();
 </script>
-<script src="/app.js"></script>
-  </body>
+
+</body>
 </html>
