@@ -6,244 +6,81 @@
   <title>FameMap — Get Started</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #0f0f0f;
-      color: #f0f0f0;
-      min-height: 100vh;
-    }
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      border-bottom: 1px solid #1e1e1e;
-      background: #111;
-    }
-    .logo { font-size: 1.3rem; font-weight: 700; color: #fff; text-decoration: none; }
-    .logo span { color: #4ade80; }
-    .skip { font-size: 0.82rem; color: #555; text-decoration: none; }
-    .skip:hover { color: #4ade80; }
+    body { font-family: 'Segoe UI', sans-serif; background: #fafaf8; color: #1a1a1a; min-height: 100vh; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; border-bottom: 1px solid #e8e8e3; background: #fff; }
+    .logo { font-size: 1.3rem; font-weight: 700; color: #1a1a1a; text-decoration: none; }
+    .logo span { color: #16a34a; }
+    .skip { font-size: 0.82rem; color: #999; text-decoration: none; }
+    .skip:hover { color: #16a34a; }
 
-    .main {
-      max-width: 580px;
-      margin: 0 auto;
-      padding: 3rem 1.5rem;
-    }
-
-    /* PROGRESS BAR */
+    .main { max-width: 580px; margin: 0 auto; padding: 3rem 1.5rem; }
     .progress-wrap { margin-bottom: 2.5rem; }
-    .progress-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.75rem;
-      color: #555;
-      margin-bottom: 0.5rem;
-    }
-    .progress-bar {
-      height: 4px;
-      background: #1e1e1e;
-      border-radius: 999px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      background: #4ade80;
-      border-radius: 999px;
-      transition: width 0.4s ease;
-    }
+    .progress-label { display: flex; justify-content: space-between; font-size: 0.75rem; color: #999; margin-bottom: 0.5rem; }
+    .progress-bar { height: 4px; background: #e8e8e3; border-radius: 999px; overflow: hidden; }
+    .progress-fill { height: 100%; background: #16a34a; border-radius: 999px; transition: width 0.4s ease; }
 
-    /* STEPS */
     .step { display: none; }
     .step.active { display: block; }
+    .step-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em; color: #16a34a; margin-bottom: 0.75rem; }
+    h1 { font-size: 1.7rem; font-weight: 800; margin-bottom: 0.5rem; line-height: 1.2; color: #111; }
+    h1 span { color: #16a34a; }
+    .sub { color: #777; font-size: 0.9rem; margin-bottom: 2rem; line-height: 1.6; }
 
-    .step-label {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: #4ade80;
-      margin-bottom: 0.75rem;
-    }
-    h1 { font-size: 1.7rem; font-weight: 800; margin-bottom: 0.5rem; line-height: 1.2; }
-    h1 span { color: #4ade80; }
-    .sub { color: #666; font-size: 0.9rem; margin-bottom: 2rem; line-height: 1.6; }
-
-    /* OPTION CARDS */
     .option-cards { display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 2rem; }
-    .option-card {
-      background: #161616;
-      border: 2px solid #222;
-      border-radius: 12px;
-      padding: 1.25rem 1.5rem;
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .option-card:hover { border-color: #4ade80; background: #1a1a1a; }
-    .option-card.selected { border-color: #4ade80; background: rgba(74,222,128,0.05); }
+    .option-card { background: #fff; border: 2px solid #e8e8e3; border-radius: 12px; padding: 1.25rem 1.5rem; cursor: pointer; transition: border-color 0.2s, background 0.2s; display: flex; align-items: center; gap: 1rem; }
+    .option-card:hover { border-color: #16a34a; background: #fafaf8; }
+    .option-card.selected { border-color: #16a34a; background: #f0fdf4; }
     .option-icon { font-size: 1.5rem; min-width: 2rem; text-align: center; }
-    .option-text h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.2rem; }
-    .option-text p { font-size: 0.8rem; color: #666; line-height: 1.4; }
-    .option-check {
-      margin-left: auto;
-      width: 1.25rem;
-      height: 1.25rem;
-      border: 2px solid #333;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.7rem;
-      color: #4ade80;
-      min-width: 1.25rem;
-    }
-    .option-card.selected .option-check {
-      background: #4ade80;
-      border-color: #4ade80;
-      color: #000;
-    }
+    .option-text h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.2rem; color: #111; }
+    .option-text p { font-size: 0.8rem; color: #777; line-height: 1.4; }
+    .option-check { margin-left: auto; width: 1.25rem; height: 1.25rem; border: 2px solid #d4d4cc; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #16a34a; min-width: 1.25rem; }
+    .option-card.selected .option-check { background: #16a34a; border-color: #16a34a; color: #fff; }
 
-    /* FORM FIELDS */
     .field { margin-bottom: 1.1rem; }
-    label { display: block; font-size: 0.8rem; color: #777; margin-bottom: 0.4rem; }
-    input {
-      width: 100%;
-      background: #0f0f0f;
-      border: 1px solid #2a2a2a;
-      color: #f0f0f0;
-      padding: 0.75rem 1rem;
-      border-radius: 8px;
-      font-size: 0.92rem;
-      outline: none;
-      transition: border 0.2s;
-    }
-    input:focus { border-color: #4ade80; }
+    label { display: block; font-size: 0.8rem; color: #555; margin-bottom: 0.4rem; }
+    input { width: 100%; background: #fff; border: 1px solid #d4d4cc; color: #1a1a1a; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.92rem; outline: none; transition: border 0.2s; }
+    input:focus { border-color: #16a34a; }
 
-    /* SQUARE CONNECT */
-    .square-box {
-      background: #161616;
-      border: 1px solid #222;
-      border-radius: 12px;
-      padding: 1.75rem;
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
+    .square-box { background: #fff; border: 1px solid #e8e8e3; border-radius: 12px; padding: 1.75rem; text-align: center; margin-bottom: 1.5rem; }
     .square-box .sq-logo { font-size: 2.5rem; margin-bottom: 0.75rem; }
-    .square-box h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
-    .square-box p { font-size: 0.82rem; color: #666; margin-bottom: 1.25rem; line-height: 1.5; }
-    .btn-square {
-      background: #fff;
-      color: #000;
-      border: none;
-      padding: 0.8rem 1.75rem;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.92rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .btn-square:hover { background: #f0f0f0; }
-    .skip-square {
-      font-size: 0.78rem;
-      color: #555;
-      text-align: center;
-      margin-top: 0.75rem;
-    }
-    .skip-square a { color: #4ade80; cursor: pointer; text-decoration: none; }
+    .square-box h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; color: #111; }
+    .square-box p { font-size: 0.82rem; color: #777; margin-bottom: 1.25rem; line-height: 1.5; }
+    .btn-square { background: #1a1a1a; color: #fff; border: none; padding: 0.8rem 1.75rem; border-radius: 8px; font-weight: 700; font-size: 0.92rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; }
+    .btn-square:hover { opacity: 0.85; }
+    .skip-square { font-size: 0.78rem; color: #999; text-align: center; margin-top: 0.75rem; }
+    .skip-square a { color: #16a34a; cursor: pointer; text-decoration: none; }
 
-    /* SUCCESS STEP */
     .success-wrap { text-align: center; padding: 1rem 0; }
     .success-wrap .big-icon { font-size: 4rem; margin-bottom: 1rem; }
     .checklist { text-align: left; margin: 2rem 0; }
-    .check-item {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid #1a1a1a;
-      font-size: 0.9rem;
-      color: #ccc;
-    }
+    .check-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 0; border-bottom: 1px solid #f0f0ec; font-size: 0.9rem; color: #333; }
     .check-item:last-child { border-bottom: none; }
-    .check-item .dot {
-      width: 1.5rem;
-      height: 1.5rem;
-      border-radius: 50%;
-      background: rgba(74,222,128,0.15);
-      color: #4ade80;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      min-width: 1.5rem;
-    }
+    .check-item .dot { width: 1.5rem; height: 1.5rem; border-radius: 50%; background: #f0fdf4; color: #16a34a; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; min-width: 1.5rem; }
 
-    /* BUTTONS */
-    .btn-next {
-      width: 100%;
-      background: #4ade80;
-      color: #000;
-      border: none;
-      padding: 0.85rem;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
+    .btn-next { width: 100%; background: #16a34a; color: #fff; border: none; padding: 0.85rem; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: opacity 0.2s; }
     .btn-next:hover { opacity: 0.88; }
     .btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
-    .btn-back {
-      width: 100%;
-      background: none;
-      color: #555;
-      border: 1px solid #222;
-      padding: 0.75rem;
-      border-radius: 8px;
-      font-size: 0.88rem;
-      cursor: pointer;
-      margin-top: 0.75rem;
-    }
-    .btn-back:hover { color: #fff; border-color: #444; }
+    .btn-back { width: 100%; background: none; color: #999; border: 1px solid #e8e8e3; padding: 0.75rem; border-radius: 8px; font-size: 0.88rem; cursor: pointer; margin-top: 0.75rem; }
+    .btn-back:hover { color: #333; border-color: #ccc; }
 
-    .error-msg {
-      background: rgba(239,68,68,0.1);
-      border: 1px solid rgba(239,68,68,0.3);
-      color: #f87171;
-      font-size: 0.82rem;
-      padding: 0.65rem 1rem;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      display: none;
-    }
+    .error-msg { background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; font-size: 0.82rem; padding: 0.65rem 1rem; border-radius: 8px; margin-bottom: 1rem; display: none; }
     .error-msg.show { display: block; }
   </style>
 </head>
 <body>
+<script src="/app.js"></script>
 
 <nav>
-  <a href="/dashboard.html" class="logo">Review<span>Pilot</span></a>
+  <a href="/dashboard.html" class="logo">Fame<span>Map</span></a>
   <a href="/dashboard.html" class="skip">Skip setup →</a>
 </nav>
 
 <div class="main">
-
-  <!-- PROGRESS -->
   <div class="progress-wrap">
-    <div class="progress-label">
-      <span id="progressText">Step 1 of 3</span>
-      <span id="progressPct">33%</span>
-    </div>
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressFill" style="width:33%"></div>
-    </div>
+    <div class="progress-label"><span id="progressText">Step 1 of 3</span><span id="progressPct">33%</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:33%"></div></div>
   </div>
 
-  <!-- STEP 1 — Choose method -->
   <div class="step active" id="step1">
     <p class="step-label">Step 1 — How You'll Use It</p>
     <h1>How do you want to <span>collect reviews?</span></h1>
@@ -252,26 +89,17 @@
     <div class="option-cards">
       <div class="option-card" onclick="selectOption(this, 'qr')">
         <div class="option-icon">📱</div>
-        <div class="option-text">
-          <h3>QR Code on My Counter</h3>
-          <p>Print a code. Customers scan it. Zero input from you ever again.</p>
-        </div>
+        <div class="option-text"><h3>QR Code on My Counter</h3><p>Print a code. Customers scan it. Zero input from you ever again.</p></div>
         <div class="option-check">✓</div>
       </div>
       <div class="option-card" onclick="selectOption(this, 'manual')">
         <div class="option-icon">✍️</div>
-        <div class="option-text">
-          <h3>I'll Enter Customers Manually</h3>
-          <p>Type in a name and email after each visit. Takes 20 seconds.</p>
-        </div>
+        <div class="option-text"><h3>I'll Enter Customers Manually</h3><p>Type in a name and email after each visit. Takes 20 seconds.</p></div>
         <div class="option-check">✓</div>
       </div>
       <div class="option-card" onclick="selectOption(this, 'square')">
         <div class="option-icon">🔗</div>
-        <div class="option-text">
-          <h3>Connect Square</h3>
-          <p>Already use Square for appointments? Connect once, runs forever.</p>
-        </div>
+        <div class="option-text"><h3>Connect Square</h3><p>Already use Square for appointments? Connect once, runs forever.</p></div>
         <div class="option-check">✓</div>
       </div>
     </div>
@@ -280,16 +108,13 @@
     <button class="btn-next" onclick="goStep(2)">Continue →</button>
   </div>
 
-  <!-- STEP 2 — Based on choice -->
   <div class="step" id="step2">
     <div id="step2QR">
       <p class="step-label">Step 2 — Your QR Code</p>
       <h1>Your QR code is <span>ready.</span></h1>
       <p class="sub">Go to your dashboard, click "My QR Code," and print it. Tape it to your counter, front desk, or anywhere customers wait or pay.</p>
-      <div style="background:#161616;border:1px solid #222;border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;">
-        <p style="font-size:0.85rem;color:#888;line-height:1.65;">
-          💡 <strong style="color:#f0f0f0;">Pro tip:</strong> Tell your customers out loud — <em>"Feel free to scan that code and leave us a quick review, it really helps us out."</em> That one sentence doubles your scan rate.
-        </p>
+      <div style="background:#fff;border:1px solid #e8e8e3;border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;">
+        <p style="font-size:0.85rem;color:#555;line-height:1.65;">💡 <strong style="color:#111;">Pro tip:</strong> Tell your customers out loud — <em>"Feel free to scan that code and leave us a quick review, it really helps us out."</em> That one sentence doubles your scan rate.</p>
       </div>
     </div>
 
@@ -297,14 +122,8 @@
       <p class="step-label">Step 2 — Your First Customer</p>
       <h1>Send your <span>first request.</span></h1>
       <p class="sub">Enter a real customer right now and see how it works. They'll get a review request email in 2 hours.</p>
-      <div class="field">
-        <label>Customer Name</label>
-        <input type="text" id="ob_custName" placeholder="e.g. James Williams" />
-      </div>
-      <div class="field">
-        <label>Customer Email</label>
-        <input type="email" id="ob_custEmail" placeholder="james@example.com" />
-      </div>
+      <div class="field"><label>Customer Name</label><input type="text" id="ob_custName" placeholder="e.g. James Williams" /></div>
+      <div class="field"><label>Customer Email</label><input type="email" id="ob_custEmail" placeholder="james@example.com" /></div>
       <div class="error-msg" id="err2manual">Please fill in both fields.</div>
     </div>
 
@@ -316,20 +135,15 @@
         <div class="sq-logo">⬛</div>
         <h3>Connect with Square</h3>
         <p>You'll be redirected to Square to authorize access. We only read completed appointments — nothing else.</p>
-        <button class="btn-square" onclick="connectSquare()">
-          Connect Square Account
-        </button>
+        <button class="btn-square" onclick="connectSquare()">Connect Square Account</button>
       </div>
-      <div class="skip-square">
-        Don't use Square? <a onclick="goStep(3)">Skip this step →</a>
-      </div>
+      <div class="skip-square">Don't use Square? <a onclick="goStep(3)">Skip this step →</a></div>
     </div>
 
     <button class="btn-next" onclick="goStep(3)" id="step2Next">Continue →</button>
     <button class="btn-back" onclick="goStep(1)">← Back</button>
   </div>
 
-  <!-- STEP 3 — Done -->
   <div class="step" id="step3">
     <div class="success-wrap">
       <div class="big-icon">🚀</div>
@@ -338,40 +152,20 @@
       <p class="sub">Your first review requests are on their way. Here's what happens next:</p>
 
       <div class="checklist">
-        <div class="check-item">
-          <div class="dot">✓</div>
-          <span>Customers receive a friendly review request email 2 hours after their visit</span>
-        </div>
-        <div class="check-item">
-          <div class="dot">✓</div>
-          <span>Every Friday you get a weekly summary of requests sent and reviews earned</span>
-        </div>
-        <div class="check-item">
-          <div class="dot">✓</div>
-          <span>Your QR code is ready to print from your dashboard anytime</span>
-        </div>
-        <div class="check-item">
-          <div class="dot">✓</div>
-          <span>Refer other businesses and earn 15 free days for each one that subscribes</span>
-        </div>
+        <div class="check-item"><div class="dot">✓</div><span>Customers receive a friendly review request email 2 hours after their visit</span></div>
+        <div class="check-item"><div class="dot">✓</div><span>Every Friday you get a weekly summary of requests sent and reviews earned</span></div>
+        <div class="check-item"><div class="dot">✓</div><span>Your QR code is ready to print from your dashboard anytime</span></div>
+        <div class="check-item"><div class="dot">✓</div><span>Refer other businesses and earn 15 free days for each one that subscribes</span></div>
       </div>
 
-      <button class="btn-next" onclick="window.location.href='/dashboard.html'">
-        Go to My Dashboard →
-      </button>
+      <button class="btn-next" onclick="window.location.href='/dashboard.html'">Go to My Dashboard →</button>
     </div>
   </div>
-
 </div>
 
 <script>
   let selectedMethod = null;
   let currentUser = null;
-
-  async function getSupabase() {
-    const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm');
-    return createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
-  }
 
   async function init() {
     const supabase = await getSupabase();
@@ -388,66 +182,47 @@
   }
 
   function goStep(n) {
-    if (n === 2 && !selectedMethod) {
-      document.getElementById('err1').classList.add('show');
-      return;
-    }
+    if (n === 2 && !selectedMethod) { document.getElementById('err1').classList.add('show'); return; }
 
-    // Update progress
     const pct = n === 1 ? 33 : n === 2 ? 66 : 100;
     document.getElementById('progressFill').style.width = pct + '%';
     document.getElementById('progressText').textContent = `Step ${n} of 3`;
     document.getElementById('progressPct').textContent = pct + '%';
 
-    // Show correct step
     document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
     document.getElementById('step' + n).classList.add('active');
 
-    // Show correct step2 panel
     if (n === 2) {
       document.getElementById('step2QR').style.display = selectedMethod === 'qr' ? 'block' : 'none';
       document.getElementById('step2Manual').style.display = selectedMethod === 'manual' ? 'block' : 'none';
       document.getElementById('step2Square').style.display = selectedMethod === 'square' ? 'block' : 'none';
-
-      if (selectedMethod === 'square') {
-        document.getElementById('step2Next').style.display = 'none';
-      } else {
-        document.getElementById('step2Next').style.display = 'block';
-      }
+      document.getElementById('step2Next').style.display = selectedMethod === 'square' ? 'none' : 'block';
     }
 
-    if (n === 3 && selectedMethod === 'manual') {
-      sendFirstRequest();
-    }
+    if (n === 3 && selectedMethod === 'manual') sendFirstRequest();
   }
 
   async function sendFirstRequest() {
     const name = document.getElementById('ob_custName')?.value.trim();
     const email = document.getElementById('ob_custEmail')?.value.trim();
     if (!name || !email) return;
-
     try {
       const supabase = await getSupabase();
       const meta = currentUser.user_metadata;
       await supabase.from('review_requests').insert({
-        user_id: currentUser.id,
-        business_name: meta.business_name,
-        google_review_link: meta.google_review_link,
-        customer_name: name,
-        customer_email: email,
-        status: 'pending',
+        user_id: currentUser.id, business_name: meta.business_name, google_review_link: meta.google_review_link,
+        customer_name: name, customer_email: email, status: 'pending',
         send_at: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString()
       });
-    } catch (e) { /* silent — they can send from dashboard */ }
+    } catch (e) {}
   }
 
   function connectSquare() {
-    // Square OAuth — we wire this up when connecting Supabase
     alert('Square connection will be activated when your app goes live. For now, use the QR code or manual entry from your dashboard.');
   }
 
   init();
 </script>
-<script src="/app.js"></script>
-  </body>
+
+</body>
 </html>
