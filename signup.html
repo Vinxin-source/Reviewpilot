@@ -74,8 +74,22 @@
     </div>
     <div class="field"><label>Email Address</label><input type="email" id="email" placeholder="maria@example.com" /></div>
     <div class="field"><label>Password</label><input type="password" id="password" placeholder="Min. 8 characters" /></div>
-    <div class="field"><label>Your Google Maps Business Link</label><input type="url" id="googleLink" placeholder="https://g.page/r/your-business/review" /></div>
-
+    <div class="field">
+  <label>Your Google Maps Business Link</label>
+  <input type="url" id="googleLink" placeholder="https://g.page/r/your-business/review" />
+  <p style="font-size:0.78rem;color:#777;margin-top:0.5rem;line-height:1.5;">
+    Don't know this? <a href="#" onclick="toggleHelp(event)" style="color:#16a34a;font-weight:600;">Click here for help finding it →</a>
+  </p>
+  <div id="mapsHelp" style="display:none;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:1rem;margin-top:0.75rem;font-size:0.82rem;color:#444;line-height:1.6;">
+    <strong style="color:#111;">How to find your Google review link:</strong><br>
+    1. Search your business name on Google Maps<br>
+    2. Click on your business listing<br>
+    3. Click "Write a review" or the share icon<br>
+    4. Copy the link shown — it usually starts with <code>g.page</code> or <code>maps.app.goo.gl</code><br><br>
+    <strong>Don't have a Google Business Profile yet?</strong><br>
+    Go to <a href="https://business.google.com" target="_blank" style="color:#16a34a;">business.google.com</a> and create one free — takes about 10 minutes.
+  </div>
+</div>
     <button class="btn" id="signupBtn" onclick="handleSignup()">Create My Free Account</button>
 
     <p class="terms">By signing up you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>. $19/month after your 7-day trial. Cancel anytime.</p>
