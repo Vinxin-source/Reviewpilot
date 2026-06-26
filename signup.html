@@ -134,11 +134,18 @@
       errorMsg.classList.add('show');
       return;
     }
-    if (!googleLink.includes('google') && !googleLink.includes('g.page')) {
-      errorMsg.textContent = 'Please enter a valid Google Maps link.';
-      errorMsg.classList.add('show');
-      return;
-    }
+    const isValidGoogleURL =
+  googleLink.includes('google.com/maps') ||
+  googleLink.includes('maps.app.goo.gl') ||
+  googleLink.includes('goo.gl/maps') ||
+  googleLink.includes('g.page') ||
+  googleLink.includes('maps.google.com');
+
+if (!isValidGoogleURL) {
+  errorMsg.textContent = 'Please enter a valid Google Maps link. It should start with maps.app.goo.gl, google.com/maps, or similar.';
+  errorMsg.classList.add('show');
+  return;
+}
 
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span> Creating account...';
