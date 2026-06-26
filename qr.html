@@ -3,276 +3,289 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ReviewPilot — My QR Code</title>
+  <title>FameMap — My QR Code & Flyer</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #0f0f0f;
-      color: #f0f0f0;
-      min-height: 100vh;
-    }
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      border-bottom: 1px solid #1e1e1e;
-      background: #111;
-    }
-    .logo { font-size: 1.3rem; font-weight: 700; color: #fff; text-decoration: none; }
-    .logo span { color: #4ade80; }
-    nav a.back {
-      font-size: 0.85rem;
-      color: #666;
-      text-decoration: none;
-    }
-    nav a.back:hover { color: #4ade80; }
+    body { font-family: 'Segoe UI', sans-serif; background: #fafaf8; color: #1a1a1a; min-height: 100vh; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; border-bottom: 1px solid #e8e8e3; background: #fff; }
+    .logo { font-size: 1.3rem; font-weight: 700; color: #1a1a1a; text-decoration: none; }
+    .logo span { color: #16a34a; }
+    nav a.back { font-size: 0.85rem; color: #777; text-decoration: none; }
+    nav a.back:hover { color: #16a34a; }
 
-    .main {
-      max-width: 640px;
-      margin: 0 auto;
-      padding: 3rem 1.5rem;
-      text-align: center;
-    }
+    .main { max-width: 640px; margin: 0 auto; padding: 3rem 1.5rem; text-align: center; }
+    .page-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em; color: #16a34a; margin-bottom: 0.75rem; }
+    h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem; color: #111; }
+    .sub { color: #777; font-size: 0.92rem; margin-bottom: 2.5rem; line-height: 1.6; }
 
-    .page-label {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: #4ade80;
-      margin-bottom: 0.75rem;
-    }
-    h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem; }
-    .sub { color: #666; font-size: 0.92rem; margin-bottom: 2.5rem; line-height: 1.6; }
+    .upload-panel { background: #fff; border: 1px solid #e8e8e3; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; text-align: left; }
+    .upload-panel h3 { font-size: 0.9rem; margin-bottom: 0.4rem; color: #111; }
+    .upload-panel p { font-size: 0.8rem; color: #777; margin-bottom: 1rem; }
+    .upload-row { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .logo-preview { width: 60px; height: 60px; border-radius: 10px; background: #fafaf8; border: 1px solid #d4d4cc; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #ccc; overflow: hidden; flex-shrink: 0; }
+    .logo-preview img { width: 100%; height: 100%; object-fit: cover; }
+    .upload-btn { background: #f5f5f0; color: #333; border: 1px solid #d4d4cc; padding: 0.6rem 1.1rem; border-radius: 8px; font-size: 0.85rem; cursor: pointer; }
+    .upload-btn:hover { border-color: #16a34a; color: #111; }
+    .upload-status { font-size: 0.78rem; color: #16a34a; margin-top: 0.6rem; display: none; }
+    .upload-status.show { display: block; }
 
-    /* QR CARD — what gets printed */
-    .qr-card {
-      background: #fff;
-      color: #000;
-      border-radius: 16px;
-      padding: 2.5rem 2rem;
-      margin: 0 auto 2rem;
-      max-width: 320px;
-      box-shadow: 0 0 60px rgba(74,222,128,0.08);
-    }
-    .qr-card .business-name {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: #111;
-      margin-bottom: 0.4rem;
-    }
-    .qr-card .scan-text {
-      font-size: 0.82rem;
-      color: #666;
-      margin-bottom: 1.5rem;
-    }
-    #qrcode {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 1.5rem;
-    }
-    #qrcode canvas, #qrcode img {
-      border-radius: 8px;
-    }
-    .qr-card .star-row {
-      font-size: 1.3rem;
-      margin-bottom: 0.5rem;
-      letter-spacing: 0.05em;
-    }
-    .qr-card .cta-text {
-      font-size: 0.78rem;
-      color: #444;
-      line-height: 1.5;
-    }
-    .qr-card .brand {
-      margin-top: 1.25rem;
-      font-size: 0.65rem;
-      color: #bbb;
-      letter-spacing: 0.08em;
-    }
+    .qr-card { background: #fff; color: #000; border-radius: 16px; padding: 2.5rem 2rem; margin: 0 auto 2rem; max-width: 320px; border: 1px solid #e8e8e3; box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+    .qr-card .card-logo { width: 56px; height: 56px; border-radius: 12px; margin: 0 auto 0.75rem; object-fit: cover; display: none; }
+    .qr-card .business-name { font-size: 1.1rem; font-weight: 800; color: #111; margin-bottom: 0.4rem; }
+    .qr-card .scan-text { font-size: 0.82rem; color: #666; margin-bottom: 1.5rem; }
+    #qrcode { display: flex; justify-content: center; margin-bottom: 1.5rem; }
+    #qrcode canvas, #qrcode img { border-radius: 8px; }
+    .qr-card .star-row { font-size: 1.3rem; margin-bottom: 0.5rem; letter-spacing: 0.05em; }
+    .qr-card .cta-text { font-size: 0.78rem; color: #444; line-height: 1.5; }
+    .qr-card .brand { margin-top: 1.25rem; font-size: 0.65rem; color: #bbb; letter-spacing: 0.08em; }
 
-    /* BUTTONS */
     .actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
-    .btn-print {
-      background: #4ade80;
-      color: #000;
-      border: none;
-      padding: 0.8rem 1.75rem;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      cursor: pointer;
-    }
-    .btn-download {
-      background: #161616;
-      color: #ccc;
-      border: 1px solid #2a2a2a;
-      padding: 0.8rem 1.75rem;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      cursor: pointer;
-    }
-    .btn-download:hover { border-color: #4ade80; color: #fff; }
+    .btn-print, .btn-pdf { background: #16a34a; color: #fff; border: none; padding: 0.8rem 1.75rem; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer; }
+    .btn-download { background: #fff; color: #333; border: 1px solid #d4d4cc; padding: 0.8rem 1.75rem; border-radius: 8px; font-weight: 600; font-size: 0.95rem; cursor: pointer; }
+    .btn-download:hover, .btn-pdf:hover { opacity: 0.9; }
 
-    /* TIPS */
-    .tips {
-      background: #161616;
-      border: 1px solid #222;
-      border-radius: 12px;
-      padding: 1.5rem;
-      text-align: left;
-    }
-    .tips h3 {
-      font-size: 0.85rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: #4ade80;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-    .tip {
-      display: flex;
-      gap: 0.75rem;
-      margin-bottom: 0.85rem;
-      font-size: 0.85rem;
-      color: #888;
-      line-height: 1.5;
-    }
+    .tips { background: #fff; border: 1px solid #e8e8e3; border-radius: 12px; padding: 1.5rem; text-align: left; }
+    .tips h3 { font-size: 0.85rem; font-weight: 700; margin-bottom: 1rem; color: #16a34a; text-transform: uppercase; letter-spacing: 0.08em; }
+    .tip { display: flex; gap: 0.75rem; margin-bottom: 0.85rem; font-size: 0.85rem; color: #555; line-height: 1.5; }
     .tip:last-child { margin-bottom: 0; }
-    .tip .num {
-      min-width: 1.4rem;
-      height: 1.4rem;
-      background: #1e1e1e;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.7rem;
-      color: #4ade80;
-      font-weight: 700;
-      margin-top: 0.1rem;
-    }
+    .tip .num { min-width: 1.4rem; height: 1.4rem; background: #f0fdf4; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #16a34a; font-weight: 700; margin-top: 0.1rem; }
 
-    .loading-msg { color: #444; font-size: 0.9rem; padding: 3rem 0; }
+    .loading-msg { color: #ccc; font-size: 0.9rem; padding: 3rem 0; }
+    .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid #fff; border-top-color: transparent; border-radius: 50%; animation: spin 0.6s linear infinite; vertical-align: middle; margin-right: 5px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     @media print {
-      nav, .actions, .tips, .sub, .page-label, h1 { display: none !important; }
+      nav, .actions, .tips, .sub, .page-label, h1, .upload-panel { display: none !important; }
       body { background: #fff; }
       .main { padding: 0; }
-      .qr-card {
-        box-shadow: none;
-        border-radius: 0;
-        max-width: 100%;
-        margin: 0;
-      }
+      .qr-card { box-shadow: none; border-radius: 0; max-width: 100%; margin: 0; }
     }
   </style>
 </head>
 <body>
+<script src="/app.js"></script>
 
 <nav>
-  <a href="/dashboard.html" class="logo">Review<span>Pilot</span></a>
+  <a href="/dashboard.html" class="logo">Fame<span>Map</span></a>
   <a href="/dashboard.html" class="back">← Back to Dashboard</a>
 </nav>
 
 <div class="main">
-  <p class="page-label">Your QR Code</p>
+  <p class="page-label">Your QR Code & Flyer</p>
   <h1>Print & Place on Your Counter</h1>
-  <p class="sub">Customers scan this after their visit. ReviewPilot automatically sends them a review request. No typing needed from you — ever.</p>
+  <p class="sub">Customers scan this after their visit. FameMap automatically sends them a review request. No typing needed from you — ever.</p>
+
+  <div class="upload-panel">
+    <h3>🖼️ Your Logo (optional)</h3>
+    <p>Upload your logo and it'll appear on your printed flyer and PDF.</p>
+    <div class="upload-row">
+      <div class="logo-preview" id="logoPreview">🏢</div>
+      <input type="file" id="logoInput" accept="image/*" style="display:none;" onchange="handleLogoUpload(event)" />
+      <button class="upload-btn" onclick="document.getElementById('logoInput').click()">Upload Logo</button>
+    </div>
+    <p class="upload-status" id="uploadStatus">✅ Logo uploaded and saved</p>
+  </div>
 
   <div id="loadingMsg" class="loading-msg">Generating your QR code...</div>
 
   <div id="qrSection" style="display:none;">
-    <!-- QR CARD -->
     <div class="qr-card" id="qrCard">
+      <img class="card-logo" id="cardLogo" alt="logo" />
       <div class="business-name" id="cardBusiness">Your Business</div>
       <div class="scan-text">Scan to leave us a quick review 😊</div>
       <div id="qrcode"></div>
       <div class="star-row">⭐⭐⭐⭐⭐</div>
       <div class="cta-text">Takes less than 1 minute.<br>We really appreciate it!</div>
-      <div class="brand">Powered by ReviewPilot</div>
+      <div class="brand">Powered by FameMap</div>
     </div>
 
-    <!-- ACTIONS -->
     <div class="actions">
       <button class="btn-print" onclick="window.print()">🖨️ Print This Page</button>
-      <button class="btn-download" onclick="downloadQR()">⬇️ Download QR Image</button>
+      <button class="btn-pdf" onclick="downloadPDF()" id="pdfBtn">📄 Download PDF Flyer</button>
+      <button class="btn-download" onclick="downloadQR()">⬇️ QR Image Only</button>
     </div>
 
-    <!-- TIPS -->
     <div class="tips">
       <h3>💡 How to Get the Most Reviews</h3>
-      <div class="tip">
-        <div class="num">1</div>
-        <div>Place the printed QR code at your checkout counter, front desk, or anywhere customers pay or wait.</div>
-      </div>
-      <div class="tip">
-        <div class="num">2</div>
-        <div>Tell customers verbally: <em>"Feel free to scan that code and leave us a review — it really helps!"</em></div>
-      </div>
-      <div class="tip">
-        <div class="num">3</div>
-        <div>Put one in your waiting area too. The more they see it, the more likely they scan it.</div>
-      </div>
-      <div class="tip">
-        <div class="num">4</div>
-        <div>ReviewPilot sends a follow-up reminder automatically 2 hours after they scan — so even if they forget, you're covered.</div>
-      </div>
+      <div class="tip"><div class="num">1</div><div>Place the printed flyer at your checkout counter, front desk, or anywhere customers pay or wait.</div></div>
+      <div class="tip"><div class="num">2</div><div>Tell customers verbally: <em>"Feel free to scan that code and leave us a review — it really helps!"</em></div></div>
+      <div class="tip"><div class="num">3</div><div>Put one in your waiting area too. The more they see it, the more likely they scan it.</div></div>
+      <div class="tip"><div class="num">4</div><div>FameMap sends a follow-up reminder automatically — even if they forget, you're covered.</div></div>
     </div>
   </div>
 </div>
 
 <script>
-  async function getSupabase() {
-    const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm');
-    return createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
-  }
+  let currentUser = null;
+  let businessName = '';
+  let googleLink = '';
+  let logoDataUrl = null;
 
   async function init() {
     const supabase = await getSupabase();
     const { data: { session } } = await supabase.auth.getSession();
+    if (!session) { window.location.href = '/login.html'; return; }
 
-    if (!session) {
-      window.location.href = '/login.html';
-      return;
-    }
-
-    const user = session.user;
-    const meta = user.user_metadata;
-    const businessName = meta.business_name || 'My Business';
-    const googleLink = meta.google_review_link || 'https://reviewpilot.app';
-
-    // Build QR scan URL — points to a scan landing that logs the scan + sends email
-    const scanURL = `${window.location.origin}/scan.html?uid=${user.id}`;
+    currentUser = session.user;
+    const meta = currentUser.user_metadata;
+    businessName = meta.business_name || 'My Business';
+    googleLink = meta.google_review_link || 'https://famemap.app';
 
     document.getElementById('cardBusiness').textContent = businessName;
+
+    const { data: files } = await supabase.storage.from('logos').list(currentUser.id);
+    if (files && files.length > 0) {
+      const { data: urlData } = supabase.storage.from('logos').getPublicUrl(`${currentUser.id}/${files[0].name}`);
+      if (urlData?.publicUrl) {
+        logoDataUrl = urlData.publicUrl;
+        document.getElementById('logoPreview').innerHTML = `<img src="${logoDataUrl}" style="width:100%;height:100%;object-fit:cover;" />`;
+        document.getElementById('cardLogo').src = logoDataUrl;
+        document.getElementById('cardLogo').style.display = 'block';
+      }
+    }
+
+    const { data: newRequest } = await supabase.from('review_requests').insert({
+      user_id: currentUser.id,
+      business_name: businessName,
+      google_review_link: googleLink,
+      customer_name: 'QR Scan Customer',
+      status: 'qr_scan',
+      send_at: new Date().toISOString()
+    }).select().single();
+
+    const scanURL = `${window.location.origin}/feedback.html?id=${newRequest?.id}`;
+
     document.getElementById('loadingMsg').style.display = 'none';
     document.getElementById('qrSection').style.display = 'block';
 
-    // Generate QR code
     new QRCode(document.getElementById('qrcode'), {
-      text: scanURL,
-      width: 180,
-      height: 180,
-      colorDark: '#000000',
-      colorLight: '#ffffff',
-      correctLevel: QRCode.CorrectLevel.H
+      text: scanURL, width: 180, height: 180,
+      colorDark: '#000000', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.H
     });
+  }
+
+  async function handleLogoUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) { alert('Please upload an image under 2MB.'); return; }
+
+    document.getElementById('logoPreview').innerHTML = '<span class="spinner" style="border-color:#888;border-top-color:transparent;"></span>';
+
+    try {
+      const supabase = await getSupabase();
+      const fileExt = file.name.split('.').pop();
+      const filePath = `${currentUser.id}/logo.${fileExt}`;
+      const { error } = await supabase.storage.from('logos').upload(filePath, file, { upsert: true });
+      if (error) throw error;
+
+      const { data: urlData } = supabase.storage.from('logos').getPublicUrl(filePath);
+      logoDataUrl = urlData.publicUrl + '?t=' + Date.now();
+
+      document.getElementById('logoPreview').innerHTML = `<img src="${logoDataUrl}" />`;
+      document.getElementById('cardLogo').src = logoDataUrl;
+      document.getElementById('cardLogo').style.display = 'block';
+
+      document.getElementById('uploadStatus').classList.add('show');
+      setTimeout(() => document.getElementById('uploadStatus').classList.remove('show'), 3000);
+
+    } catch (err) {
+      alert('Could not upload logo. Try a different image.');
+      document.getElementById('logoPreview').innerHTML = '🏢';
+    }
   }
 
   function downloadQR() {
     const canvas = document.querySelector('#qrcode canvas');
-    if (!canvas) {
-      alert('QR code not ready yet. Wait a moment and try again.');
-      return;
-    }
+    if (!canvas) { alert('QR code not ready yet.'); return; }
     const link = document.createElement('a');
-    link.download = 'reviewpilot-qr-code.png';
+    link.download = 'famemap-qr-code.png';
     link.href = canvas.toDataURL();
     link.click();
+  }
+
+  async function downloadPDF() {
+    const btn = document.getElementById('pdfBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Building PDF...';
+
+    try {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit: 'mm', format: [148, 210] });
+      const pageWidth = 148;
+      let y = 20;
+
+      doc.setFillColor(255, 255, 255);
+      doc.rect(0, 0, pageWidth, 210, 'F');
+
+      if (logoDataUrl) {
+        try {
+          const img = await loadImageAsBase64(logoDataUrl);
+          doc.addImage(img, 'JPEG', pageWidth / 2 - 12, y, 24, 24);
+          y += 32;
+        } catch (e) { y += 5; }
+      } else { y += 5; }
+
+      doc.setFontSize(20);
+      doc.setFont(undefined, 'bold');
+      doc.setTextColor(20, 20, 20);
+      doc.text(businessName, pageWidth / 2, y, { align: 'center' });
+      y += 10;
+
+      doc.setFontSize(11);
+      doc.setFont(undefined, 'normal');
+      doc.setTextColor(100, 100, 100);
+      doc.text('Scan to leave us a quick review', pageWidth / 2, y, { align: 'center' });
+      y += 15;
+
+      const canvas = document.querySelector('#qrcode canvas');
+      if (canvas) {
+        const qrImg = canvas.toDataURL('image/png');
+        const qrSize = 70;
+        doc.addImage(qrImg, 'PNG', pageWidth / 2 - qrSize / 2, y, qrSize, qrSize);
+        y += qrSize + 12;
+      }
+
+      doc.setFontSize(22);
+      doc.setTextColor(250, 204, 21);
+      doc.text('* * * * *', pageWidth / 2, y, { align: 'center' });
+      y += 12;
+
+      doc.setFontSize(10);
+      doc.setTextColor(80, 80, 80);
+      doc.text('Takes less than 1 minute.', pageWidth / 2, y, { align: 'center' });
+      y += 5;
+      doc.text('We really appreciate it!', pageWidth / 2, y, { align: 'center' });
+
+      doc.setFontSize(8);
+      doc.setTextColor(180, 180, 180);
+      doc.text('Powered by FameMap', pageWidth / 2, 200, { align: 'center' });
+
+      doc.save(`${businessName.replace(/\s+/g, '-')}-review-flyer.pdf`);
+
+    } catch (err) {
+      alert('Could not generate PDF. Try the Print button instead.');
+    }
+
+    btn.disabled = false;
+    btn.innerHTML = '📄 Download PDF Flyer';
+  }
+
+  function loadImageAsBase64(url) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = 'Anonymous';
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        canvas.getContext('2d').drawImage(img, 0, 0);
+        resolve(canvas.toDataURL('image/jpeg'));
+      };
+      img.onerror = reject;
+      img.src = url;
+    });
   }
 
   init();
