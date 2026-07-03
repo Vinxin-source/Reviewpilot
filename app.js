@@ -5,8 +5,8 @@
 
 // ── SUPABASE CONFIG ──
 // We fill these two values in after supabase setup
-window.SUPABASE_URL='https://kknlpvjmdetlptdsafhz.supabase.co';
-window.SUPABASE_ANON_KEY='sb_publishable_WlfN6pNKFn_pg4dhAR6dog_w1u99Dnm';
+window.SUPABASE_URL = window.CONFIG.SUPABASE_URL;
+window.SUPABASE_ANON_KEY = window.CONFIG.SUPABASE_ANON_KEY;
 // ── SUPABASE CLIENT ──
 async function getSupabase() {
   const { createClient } = await import(
