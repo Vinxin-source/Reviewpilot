@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GetGetFameMap — Refer & Earn</title>
+  <title>GetFameMap — Refer & Earn</title>
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#16a34a">
 <script>
@@ -78,7 +78,7 @@
 
 <div class="main">
   <p class="page-label">Refer & Earn</p>
-  <h1>Share GetGetFameMap.<br><span>Both of you win.</span></h1>
+  <h1>Share GetFameMap.<br><span>Both of you win.</span></h1>
   <p class="sub">Refer another local business. When they subscribe, you both get <strong style="color:#111;">15 extra free days</strong>. No limit — refer 10 businesses, get 150 free days.</p>
 
   <div class="how">
@@ -127,7 +127,7 @@
     refLink = `${window.location.origin}/signup.html?ref=${user.id}`;
     document.getElementById('refLink').textContent = refLink;
 
-    const msg = encodeURIComponent(`Hey! I've been using GetGetFameMap to get more Google reviews for my business automatically. You should try it — first 7 days are free: ${refLink}`);
+    const msg = encodeURIComponent(`Hey! I've been using GetFameMap to get more Google reviews for my business automatically. You should try it — first 7 days are free: ${refLink}`);
     document.getElementById('shareSMS').href = `sms:?body=${msg}`;
     document.getElementById('shareWA').href = `https://wa.me/?text=${msg}`;
     document.getElementById('shareEmail').href = `mailto:?subject=Get more Google reviews automatically&body=${decodeURIComponent(msg)}`;

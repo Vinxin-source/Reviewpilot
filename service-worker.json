@@ -1,4 +1,4 @@
-const CACHE = 'GetGetFameMap-v1';
+const CACHE = 'GetFameMap-v1';
 const FILES = [
   '/',
   '/dashboard.html',

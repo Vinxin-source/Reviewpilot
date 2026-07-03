@@ -1,5 +1,5 @@
 /* ============================================
-   GetGetFameMap — Global App Logic
+   GetFameMap — Global App Logic
    Loaded on every page
    ============================================ */
 
@@ -158,7 +158,7 @@ function buildReferralLink(userId) {
 // ── BUILD WHATSAPP SHARE ──
 function buildWhatsAppShare(referralLink) {
   const msg = encodeURIComponent(
-    `Hey! I use GetGetFameMap to get Google reviews on autopilot for my business. First 7 days are free — check it out: ${referralLink}`
+    `Hey! I use GetFameMap to get Google reviews on autopilot for my business. First 7 days are free — check it out: ${referralLink}`
   );
   return `https://wa.me/?text=${msg}`;
 }
@@ -166,7 +166,7 @@ function buildWhatsAppShare(referralLink) {
 // ── BUILD SMS SHARE ──
 function buildSMSShare(referralLink) {
   const msg = encodeURIComponent(
-    `Hey! Try GetGetFameMap — it automatically asks your customers for Google reviews. 7-day free trial: ${referralLink}`
+    `Hey! Try GetFameMap — it automatically asks your customers for Google reviews. 7-day free trial: ${referralLink}`
   );
   return `sms:?body=${msg}`;
 }
@@ -175,7 +175,7 @@ function buildSMSShare(referralLink) {
 function buildEmailShare(referralLink) {
   const subject = encodeURIComponent('Get more Google reviews automatically');
   const body = encodeURIComponent(
-    `Hey,\n\nI've been using a tool called  GetGetFameMap automatically sends review requests to my customers after each visit.\n\nIt's been getting me way more Google reviews without doing anything manually.\n\nFirst 7 days are completely free — no card needed:\n${referralLink}\n\nThought you'd find it useful!`
+    `Hey,\n\nI've been using a tool called  GetFameMap automatically sends review requests to my customers after each visit.\n\nIt's been getting me way more Google reviews without doing anything manually.\n\nFirst 7 days are completely free — no card needed:\n${referralLink}\n\nThought you'd find it useful!`
   );
   return `mailto:?subject=${subject}&body=${body}`;
 }
@@ -223,4 +223,4 @@ async function getWeeklyStats(userId) {
   return { total, thisWeek };
 }
 
-console.log('%cGetGetFameMap app.js loaded ✅', 'color:#4ade80;font-weight:bold;');
+console.log('%cGetFameMap app.js loaded ✅', 'color:#4ade80;font-weight:bold;');

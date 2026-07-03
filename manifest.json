@@ -1,6 +1,6 @@
 {
-  "name": "GetGetFameMap",
-  "short_name": "GetGetFameMap",
+  "name": "GetFameMap",
+  "short_name": "GetFameMap",
   "description": "Automate your Google reviews",
   "start_url": "/dashboard.html",
   "display": "standalone",
