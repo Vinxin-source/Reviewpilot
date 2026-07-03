@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FameMap — My QR Code & Flyer</title>
+  <title>GetGetFameMap — My QR Code & Flyer</title>
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#16a34a">
 <script>
@@ -81,7 +81,7 @@
 <div class="main">
   <p class="page-label">Your QR Code & Flyer</p>
   <h1>Print & Place on Your Counter</h1>
-  <p class="sub">Customers scan this after their visit. FameMap automatically sends them a review request. No typing needed from you — ever.</p>
+  <p class="sub">Customers scan this after their visit. GetGetFameMap automatically sends them a review request. No typing needed from you — ever.</p>
 
   <div class="upload-panel">
     <h3>🖼️ Your Logo (optional)</h3>
@@ -110,7 +110,7 @@
       <div id="qrcode"></div>
       <div class="star-row">⭐⭐⭐⭐⭐</div>
       <div class="cta-text">Takes less than 1 minute.<br>We really appreciate it!</div>
-      <div class="brand">Powered by FameMap</div>
+      <div class="brand">Powered by GetGetFameMap</div>
     </div>
 
     <div class="actions">
@@ -124,7 +124,7 @@
       <div class="tip"><div class="num">1</div><div>Place the printed flyer at your checkout counter, front desk, or anywhere customers pay or wait.</div></div>
       <div class="tip"><div class="num">2</div><div>Tell customers verbally: <em>"Feel free to scan that code and leave us a review — it really helps!"</em></div></div>
       <div class="tip"><div class="num">3</div><div>Put one in your waiting area too. The more they see it, the more likely they scan it.</div></div>
-      <div class="tip"><div class="num">4</div><div>FameMap sends a follow-up reminder automatically — even if they forget, you're covered.</div></div>
+      <div class="tip"><div class="num">4</div><div>GetGetFameMap sends a follow-up reminder automatically — even if they forget, you're covered.</div></div>
     </div>
   </div>
 </div>
@@ -224,7 +224,7 @@
     const canvas = document.querySelector('#qrcode canvas');
     if (!canvas) { alert('QR code not ready yet.'); return; }
     const link = document.createElement('a');
-    link.download = 'famemap-qr-code.png';
+    link.download = 'GetGetFameMap-qr-code.png';
     link.href = canvas.toDataURL();
     link.click();
   }
@@ -284,7 +284,7 @@
 
       doc.setFontSize(8);
       doc.setTextColor(180, 180, 180);
-      doc.text('Powered by FameMap', pageWidth / 2, 200, { align: 'center' });
+      doc.text('Powered by GetGetFameMap', pageWidth / 2, 200, { align: 'center' });
 
       doc.save(`${businessName.replace(/\s+/g, '-')}-review-flyer.pdf`);
 
