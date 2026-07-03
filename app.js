@@ -1,22 +1,20 @@
+```javascript
 /* ============================================
    GetFameMap — Global App Logic
-   Loaded on every page
    ============================================ */
 
-// ── SUPABASE CONFIG ──
-// We fill these two values in after supabase setup
-window.SUPABASE_URL = window.CONFIG.SUPABASE_URL;
-window.SUPABASE_ANON_KEY = window.CONFIG.SUPABASE_ANON_KEY;
-// ── SUPABASE CLIENT ──
+// ── SUPABASE CONFIG (reads from config.js) ──
 async function getSupabase() {
   const { createClient } = await import(
     'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
   );
-  return createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+  return createClient(
+    window.CONFIG?.SUPABASE_URL || window.SUPABASE_URL,
+    window.CONFIG?.SUPABASE_ANON_KEY || window.SUPABASE_ANON_KEY
+  );
 }
 
 // ── SESSION GUARD ──
-// Call this at top of any protected page
 async function requireAuth(redirectTo = '/login.html') {
   const supabase = await getSupabase();
   const { data: { session } } = await supabase.auth.getSession();
@@ -41,36 +39,29 @@ function getTrialDaysLeft(user) {
   return Math.max(0, Math.ceil((trialEnds - Date.now()) / 86400000));
 }
 
-// ── REFERRAL CODE FROM URL ──
+// ── REFERRAL CODE ──
 function getReferralCode() {
   return new URLSearchParams(window.location.search).get('ref')
     || localStorage.getItem('referralCode')
     || null;
 }
 
-// ── SAVE REFERRAL CODE ──
 function saveReferralCode() {
   const code = new URLSearchParams(window.location.search).get('ref');
   if (code) localStorage.setItem('referralCode', code);
 }
-saveReferralCode(); // runs on every page load
+saveReferralCode();
 
 // ── FORMAT DATE ──
 function formatDate(iso) {
   return new Date(iso).toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric'
+    month: 'short', day: 'numeric', year: 'numeric'
   });
 }
 
-// ── FORMAT DATE + TIME ──
 function formatDateTime(iso) {
   return new Date(iso).toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
+    month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
   });
 }
 
@@ -83,9 +74,7 @@ async function copyToClipboard(text, feedbackEl) {
       setTimeout(() => feedbackEl.classList.remove('show'), 3000);
     }
     return true;
-  } catch {
-    return false;
-  }
+  } catch { return false; }
 }
 
 // ── SHOW ALERT ──
@@ -94,95 +83,12 @@ function showAlert(id, message, type = 'success') {
   if (!el) return;
   el.textContent = message;
   el.className = `alert alert-${type} show`;
-  if (type === 'success') {
-    setTimeout(() => el.classList.remove('show'), 4000);
-  }
+  if (type === 'success') setTimeout(() => el.classList.remove('show'), 4000);
 }
 
 function hideAlert(id) {
   const el = document.getElementById(id);
   if (el) el.classList.remove('show');
-}
-
-// ── SEND REVIEW REQUEST ──
-async function sendReviewRequest({ userId, businessName, googleLink, customerName, customerEmail, customerPhone }) {
-  const supabase = await getSupabase();
-
-  const { error } = await supabase.from('review_requests').insert({
-    user_id: userId,
-    business_name: businessName,
-    google_review_link: googleLink,
-    customer_name: customerName,
-    customer_email: customerEmail || null,
-    customer_phone: customerPhone || null,
-    status: 'pending',
-    send_at: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString()
-  });
-
-  if (error) throw error;
-  return true;
-}
-
-// ── LOAD REVIEW REQUESTS ──
-async function loadReviewRequests(userId, limit = 50) {
-  const supabase = await getSupabase();
-  const { data, error } = await supabase
-    .from('review_requests')
-    .select('*')
-    .eq('user_id', userId)
-    .order('created_at', { ascending: false })
-    .limit(limit);
-
-  if (error) throw error;
-  return data || [];
-}
-
-// ── LOAD REFERRALS ──
-async function loadReferrals(userId) {
-  const supabase = await getSupabase();
-  const { data, error } = await supabase
-    .from('referrals')
-    .select('*')
-    .eq('referrer_id', userId)
-    .order('created_at', { ascending: false });
-
-  if (error) throw error;
-  return data || [];
-}
-
-// ── BUILD REFERRAL LINK ──
-function buildReferralLink(userId) {
-  return `${window.location.origin}/signup.html?ref=${userId}`;
-}
-
-// ── BUILD WHATSAPP SHARE ──
-function buildWhatsAppShare(referralLink) {
-  const msg = encodeURIComponent(
-    `Hey! I use GetFameMap to get Google reviews on autopilot for my business. First 7 days are free — check it out: ${referralLink}`
-  );
-  return `https://wa.me/?text=${msg}`;
-}
-
-// ── BUILD SMS SHARE ──
-function buildSMSShare(referralLink) {
-  const msg = encodeURIComponent(
-    `Hey! Try GetFameMap — it automatically asks your customers for Google reviews. 7-day free trial: ${referralLink}`
-  );
-  return `sms:?body=${msg}`;
-}
-
-// ── BUILD EMAIL SHARE ──
-function buildEmailShare(referralLink) {
-  const subject = encodeURIComponent('Get more Google reviews automatically');
-  const body = encodeURIComponent(
-    `Hey,\n\nI've been using a tool called  GetFameMap automatically sends review requests to my customers after each visit.\n\nIt's been getting me way more Google reviews without doing anything manually.\n\nFirst 7 days are completely free — no card needed:\n${referralLink}\n\nThought you'd find it useful!`
-  );
-  return `mailto:?subject=${subject}&body=${body}`;
-}
-
-// ── WEEK AGO DATE ──
-function weekAgo() {
-  return new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 }
 
 // ── VALIDATE EMAIL ──
@@ -192,7 +98,11 @@ function isValidEmail(email) {
 
 // ── VALIDATE GOOGLE LINK ──
 function isValidGoogleLink(url) {
-  return url.includes('google') || url.includes('g.page') || url.includes('goo.gl');
+  return url.includes('google.com/maps') ||
+         url.includes('maps.app.goo.gl') ||
+         url.includes('goo.gl/maps') ||
+         url.includes('g.page') ||
+         url.includes('maps.google.com');
 }
 
 // ── SET BUTTON LOADING ──
@@ -205,8 +115,44 @@ function setLoading(btnId, loading, originalText) {
     : originalText;
 }
 
+// ── BUILD REFERRAL LINK ──
+function buildReferralLink(userId) {
+  return `${window.location.origin}/signup.html?ref=${userId}`;
+}
+
+// ── WHATSAPP SHARE ──
+function buildWhatsAppShare(referralLink) {
+  const appName = window.CONFIG?.APP_NAME || 'GetFameMap';
+  const msg = encodeURIComponent(
+    `Hey! I use ${appName} to get Google reviews on autopilot. First 7 days free: ${referralLink}`
+  );
+  return `https://wa.me/?text=${msg}`;
+}
+
+// ── SMS SHARE ──
+function buildSMSShare(referralLink) {
+  const appName = window.CONFIG?.APP_NAME || 'GetFameMap';
+  const msg = encodeURIComponent(
+    `Try ${appName} — automates Google review requests. 7-day free trial: ${referralLink}`
+  );
+  return `sms:?body=${msg}`;
+}
+
+// ── EMAIL SHARE ──
+function buildEmailShare(referralLink) {
+  const subject = encodeURIComponent('Get more Google reviews automatically');
+  const body = encodeURIComponent(
+    `Hey,\n\nI use GetFameMap to automatically send review requests to my customers.\n\nFirst 7 days completely free:\n${referralLink}`
+  );
+  return `mailto:?subject=${subject}&body=${body}`;
+}
+
+// ── WEEK AGO ──
+function weekAgo() {
+  return new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+}
+
 // ── LOG QR SCAN ──
-// Called when a customer scans the QR code
 async function logQRScan(userId) {
   const supabase = await getSupabase();
   await supabase.from('qr_scans').insert({
@@ -217,10 +163,47 @@ async function logQRScan(userId) {
 
 // ── WEEKLY STATS ──
 async function getWeeklyStats(userId) {
-  const requests = await loadReviewRequests(userId);
-  const total = requests.length;
-  const thisWeek = requests.filter(r => new Date(r.created_at) > weekAgo()).length;
+  const supabase = await getSupabase();
+  const { data } = await supabase
+    .from('review_requests')
+    .select('created_at')
+    .eq('user_id', userId);
+  const total = data?.length || 0;
+  const thisWeek = data?.filter(r => new Date(r.created_at) > weekAgo()).length || 0;
   return { total, thisWeek };
 }
 
+// ── CHECK TRIAL STATUS ──
+async function checkTrialAndRedirect() {
+  const supabase = await getSupabase();
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) return;
+  const meta = session.user.user_metadata;
+  const trialEnds = new Date(meta.trial_ends);
+  const daysLeft = Math.max(0, Math.ceil((trialEnds - Date.now()) / 86400000));
+  const subscribed = meta.subscribed || false;
+  if (daysLeft === 0 && !subscribed) {
+    window.location.href = '/upgrade.html';
+  }
+}
+
+// ── PUSH NOTIFICATIONS ──
+async function requestNotificationPermission() {
+  if (!('Notification' in window)) return false;
+  if (Notification.permission === 'granted') return true;
+  const permission = await Notification.requestPermission();
+  return permission === 'granted';
+}
+
+function sendLocalNotification(title, body) {
+  if (Notification.permission === 'granted') {
+    new Notification(title, {
+      body,
+      icon: '/icon-192.png',
+      badge: '/icon-192.png'
+    });
+  }
+}
+
 console.log('%cGetFameMap app.js loaded ✅', 'color:#4ade80;font-weight:bold;');
+```
