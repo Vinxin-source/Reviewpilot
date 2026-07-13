@@ -8,8 +8,8 @@
 window.CONFIG = {
 
   // ── SUPABASE ──
-  SUPABASE_URL: 'YOUR_SUPABASE_URL',
-  SUPABASE_ANON_KEY: 'YOUR_SUPABASE_ANON_KEY',
+  SUPABASE_URL: 'https://kknlpvjmdetlptdsafhz.supabase.co',
+  SUPABASE_ANON_KEY: 'sb_publishable_WIfN6pNKFn_pg4dhAR6dog_w1u99Dnm',
 
   // ── EMAIL ──
   LOOPS_API_KEY: 'YOUR_LOOPS_API_KEY',
